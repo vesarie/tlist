@@ -18,7 +18,7 @@
         <ul>
             <li><a href="https://github.com/vesarie/tlist">Työn repositorio</a></li>
             <li><a href="https://github.com/vesarie/tlist/tree/master/doc/dokumentaatio.pdf?raw=true">Työn dokumentaatio</a></li>
-            <li><a href="connectiontest.php">Connectiontest-ohjelma</a></li>
+            <!--<li><a href="connectiontest.php">Connectiontest-ohjelma</a></li>-->
             <li><a href="html-demo/index.html">HTML-demosivu: seuraavan 7 päivän tehtävät -listausnäkymä</a></li>
             <!--
             <li><a href="http://cstunnus.users.cs.helsinki.fi/Tietokantasovellus/listaustesti.php">Ensimmäinen oma tietokantalistaus</a></li>
