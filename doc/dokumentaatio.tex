@@ -37,13 +37,11 @@
 \usepackage{multicol}
 \usepackage{multirow}
 \usepackage{rotating}
+\usepackage[margin=10pt,font=normalsize,labelfont=bf,labelsep=period]{caption}
 
 % For pmatrix* (starred version which allows to specify alignment)
 \usepackage{mathtools}
 
-%
-%\usepackage{natbib}
-%
 \usepackage[]{natbib}
 \usepackage{graphicx,enumerate}
 \bibliographystyle{plain}
@@ -74,13 +72,6 @@
 
 \newenvironment{proof}[1][Proof]{\begin{trivlist}
 \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-%\newenvironment{definition}[1][Definition]{\begin{trivlist}
-%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-%\newenvironment{example}[1][Example]{\begin{trivlist}
-%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-%\newenvironment{remark}[1][Remark]{\begin{trivlist}
-%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-
 \newenvironment{motivation}[1][Motivation]{\begin{trivlist}
 \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
 
@@ -89,12 +80,6 @@
       \hskip1.5em plus0em minus0.5em \fi \nobreak
       \vrule height0.75em width0.5em depth0.25em\fi}
 % end of theorem env
-
-% declare ess sup operator
-\DeclareMathOperator{\Esssup}{ess\,sup}
-
-% abbreviate Ito
-\newcommand{\Ito}{It\^{o}}
 
 \newcommand{\thedate}{\today}
 
@@ -107,9 +92,6 @@
 \newcommand{\rmnum}[1]{\romannumeral #1}
 \newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
 \makeatother
-
-% Command for the string: cubic meters per hectare - m3/ha
-\newcommand{\cmha}{m$^3$/ha}
 
 % Try to prevent widow and orphan lines
 \widowpenalty=300
@@ -150,7 +132,6 @@
 
 \maketitle
 
-%\twocolumn
 \setcounter{page}{1}
 \pagenumbering{arabic}
  
@@ -159,8 +140,6 @@
 Työn aihe on verkossa toimiva tehtävälista eli niin sanottu to do -lista. Sovelluksen käyttötarkoitus on, että käyttäjä voi kirjata sovellukseen tulevien päivien ja viikkojen tehtävät. Tämän tyyppisen sovelluksen tavoite on auttaa käyttäjiä heidän oman aikansa hallinnassa. Yksi perustavanlaatuinen syy tehtävälistan ylläpidolle on vähentää tehtävien järjestämisestä syntyvää aivojen kuormitusta kirjoittamalla ne esimerkiksi muistilapulle. Nykypäivänä lienee varsin luonnollista, että paperille kirjoitettujen muistilappujen lisäksi käytetään myös digitaalisia verkkopalveluita. Tämän tyyppisiä olemassa olevia verkkopalveluita ovat esimerkiksi todoist.com ja any.do.
 
 Työn aihe on mukautettu versio valmiista aiheesta nimeltä Muistilista. Olennaisin ero valmiiseen aiheeseen verrattuna on, että tämä sovellus järjestää tehtävät etupäässä päivämäärän mukaan. Valmis aihe Muistilista vuorostaan järjestää tehtävät etupäässä niiden prioriteetin mukaan. Tämä sovellus tulee todennäköisesti tarjoamaan myös mahdollisuuden tehtävien prioriteettien asettamiseen, mutta tämä tulee olemaan enemmänkin lisäominaisuus. Pääasiallinen tarkoitus on pitää kirjaa tehtävistä niiden suunnitellun suorituspäivämäärän mukaan.
-
-Sovellus ryhmittelee tehtävät sillä tavalla, että kukin tehtävä kuuluu johonkin projektiin. Projektin sisällä tehtäviä voi ryhmitellä edelleen sillä tavalla, että yhdellä tehtävällä voi olla alitehtäviä. Joka tapauksessa kullakin tehtävällä on sille osoitettu suorituspäivämäärä, jota voi tarpeen mukaan myös päivittää. Tehtäviä voi tarkastella sekä projektikohtaisesti että kootusti. Koottu näkymä näyttää tulevan päivän ja tulevan viikon tehtävät päiväkohtaisesti.
 
 Sovellus toteutetaan Javalla käyttäen Java EE:n web-profiilia. Web-profiili tosin sisältää useita eri tekniikoita, joista tämä sovellus käyttää vain pientä osaa. Tämä sovellus käyttää nimenomaan Java Servlet ja JavaServer Pages (JSP) -tekniikoita. Näitä tekniikoita täydentämään on kehitetty myös useita erilaisia sovelluskehyksiä, mutta tässä työssä ei ole tarkoitus käyttää mitään tällaista sovelluskehystä.
 
@@ -172,51 +151,41 @@ Sovelluksen tietokannaksi on valittu PostgreSQL. PostgreSQL on kurssimateriaalis
 
 Sovelluksen käyttäjille verkossa näkyvät sivut toteutetaan HTML- ja CSS-tekniikoilla. Sivujen rakentamisessa hyödynnetään Bootstrap-kirjastoa, joka sisältää suuren joukon valmiita käyttöliittymäkomponentteja. Useimmat Bootstrapin komponentit ovat siinä mielessä staattisia, että ne eivät käytä Javascript-tekniikkaa. Tässä työssä on tarkoitus hyödyntää staattisten komponenttien lisäksi myös muutamaa Bootstrapin Javascript-komponenttia. Siten käyttäjän selaimen on tuettava myös Javascriptiä, mikä on modernien selainten perusominaisuus.
 
-\section{Järjestelmän tietosisältö}
+\section{Yleiskuva järjestelmästä}
 
-\begin{figure}[htbp]
+Sovellus ryhmittelee tehtävät sillä tavalla, että kukin tehtävä kuuluu johonkin projektiin. Projektin sisällä tehtäviä voi ryhmitellä edelleen sillä tavalla, että yhdellä tehtävällä voi olla alitehtäviä. Joka tapauksessa kullakin tehtävällä on sille osoitettu suorituspäivämäärä, jota voi tarpeen mukaan myös päivittää. Tehtäviä voi tarkastella sekä projektikohtaisesti että kootusti. Koottu näkymä näyttää tulevan päivän ja tulevan viikon tehtävät päiväkohtaisesti.
+
+Järjestelmä on tarkoitettu yksittäisille käyttäjille. Järjestelmä ei siis tue tiimityöskentelyä. Tämä tarkoittaa, että kukin projekti voi kuulua vain yhdelle käyttäjälle. Toisin sanoen projektit, tunnisteet ja tehtävät ovat käyttäjäkohtaisia. Näitä tietoja ei voi jakaa muiden käyttäjien kanssa.
+
+\begin{figure}[htb]
 \begin{center}
-\includegraphics[width=\textwidth]{img/kasitekaavio.pdf}
-\caption{{\bf Käsitekaavio}}
+\includegraphics[width=\textwidth]{img/kayttotapauskaavio.png}
+\caption{Käyttötapauskaavio}
 \label{kasitekaavio}
 \end{center}
 \end{figure}
 
+\section{Järjestelmän tietosisältö}
 
+Järjestelmän tietosisältöä kuvaavia käsitteitä ovat käyttäjä, projekti, tunniste ja tehtävä. Järjestelmä toimii siten, että kullakin käyttäjällä on omat projektinsa, tunnisteensa ja tehtävänsä. Tässä järjestelmässä tehtävä on työn perusyksikkö, jolla on tietty päivämäärä. Tehtävät jaotellaan projekteihin. Tehtäviä voidaan luokitella myös yli projektirajojen käyttämällä tunnisteita.
+
+Käyttäjällä voi olla mielivaltainen määrä projekteja ja tunnisteita. Kuhunkin projektiin ja kuhunkin tunnisteeseen voi liittyä mielivaltainen määrä tehtäviä. Projektilla ja tunnisteella on kuitenkin yksi keskeinen ero: yhdellä tehtävällä voi olla monta tunnistetta, mutta yksi tehtävä voi kuulua vain yhteen projektiin. Yksi tehtävä ei siis voi kuulua kahteen eri projektiin. Tehtävällä voi kuitenkin olla useita tunnisteita. Tehtävän tulee myös kuulua johonkin projektiin, mutta tunnisteiden merkitseminen on vapaaehtoista.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{img/kasitekaavio.pdf}
+\caption{Käsitekaavio}
+\label{kasitekaavio}
+\end{center}
+\end{figure}
+
+\begin{table}[htbp]
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{llX}
-\toprule
-Attribuutti & Arvojoukko & Kuvailu \\
-\midrule
-\multicolumn{3}{l}{\bf User} \\
-forename    & Merkkijono (max 50)  & Käyttäjän etunimi      \\ 
-surname     & Merkkijono (max 50)  & Käyttäjän sukunimi    \\ 
-email         & Merkkijono (max 30)  & Käyttäjän sähköpostiosoite   \\ 
-password    & Merkkijono (max 100) & Käyttäjän salasanan tiiviste \\[2pt]
-\midrule
-\multicolumn{3}{l}{\bf Project} \\
-name    & Merkkijono (max 100) & Projektin nimi \\
-color     & Kokonaisluku            & Projektille asetettu RGB\hyp{}värikoodi \\[2pt]
-\midrule
-\multicolumn{3}{l}{\bf Label} \\
-name    & Merkkijono (max 100) & Tunnisteen nimi \\
-color     & Kokonaisluku            & Tunnisteen RGB\hyp{}värikoodi \\[2pt]
-\midrule
-\multicolumn{3}{l}{\bf Task} \\
-name         & Merkkijono (max 50)  & Tehtävän nimi      \\ 
-priority      & Kokonaisluku            & Kokonaisluku välillä 1-4.    \\ 
-schedule     & Päivämäärä              & Suunniteltu suorituspäivä   \\ 
-completed   & Totuusarvo              & Kertoo onko tehtävä suoritettu \\
-\bottomrule
-\end{tabularx}
-
-Kenttä password sisältää merkkijonon, joka voidaan välittää salasanoja käsittelevälle metodille sellaisenaan. Merkkijonon sisältö riippuu käytettävästä salausmoduulista, mutta se sisältää salasanan tiivisteen, tiivisteen laskennassa käytetyn suolan ja muita toteutuksen tallentamia tietoja.
-
-\renewcommand{\arraystretch}{1.2}
+\caption{Järjestelmän tietokohteiden kuvaukset}
 \makebox[\textwidth][c]{
 \begin{tabularx}{1.15\textwidth}{lllX}
 \toprule
-Käsite & Attribuutti & Arvojoukko & Kuvailu \\
+Käsite & Attribuutti & Arvojoukko & Kuvaus \\
 \midrule
 User &
 forename    & Merkkijono (max 50)  & Käyttäjän etunimi      \\ 
@@ -240,13 +209,22 @@ name         & Merkkijono (max 50)  & Tehtävän nimi      \\
 \bottomrule
 \end{tabularx}
 }
+\end{table}
+
+Käyttäjän salasanan tiiviste on merkkijono. Kenttä \emph{password} sisältää merkkijonon, joka voidaan välittää salasanoja käsittelevälle metodille sellaisenaan. Merkkijono sisältää varsinaisen salasanan tiivisteen lisäksi niin sanotun suolan ja muita toteutuksen tallentamia parametreja. Merkkijonon tarkka sisältö riippuu käytettävästä salausmoduulista.
+
+Tehtävän prioriteetti on kokonaisluku välillä 1-4. Suurinta prioriteettia merkitään luvulla 1 ja pienintä prioriteettia luvulla 3. Jos prioriteettia ei ole asetettu lainkaan, sen arvoa merkitään luvulla 4. Prioriteetti on siis sitä suurempi, mitä pienempi sen lukuarvo on, ja asteikon nollakohta on luku 4.
+
+Käyttäjä voi valita kullekin projektille ja tunnisteelle oman värin, jota käytetään käyttöliittymässä. Värit tallennetaan RGB-muodossa. Värikomponentit tallennetaan yhtenä kokonaislukuna, mikä on yleisesti käytetty tapa. Punainen, vihreä ja sininen komponentti tallennetaan bitteihin 1-24, 8 bittiä per värikomponentti.
 
 \section{Relaatiotietokantakaavio}
+
+Tietokantakaavio voidaan johtaa käsitekaaviosta lisäämällä kuhunkin tauluun pääavain, ja esittämällä yhteydet vierasavainten avulla. Tunnisteen ja ja tehtävän välillä on monesta\hyp{}moneen\hyp{}tyyppinen yhteys, jonka esittämiseen tarvitaan lisäksi yksi välitaulu.
 
 \begin{figure*}[htbp]
 \begin{center}
 \makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{img/tietokantakaavio.pdf}}
-\caption{{\bf Tietokantakaavio}}
+\caption{Tietokantakaavio}
 \label{tietokantakaavio}
 \end{center}
 \end{figure*}
