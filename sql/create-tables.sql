@@ -1,7 +1,7 @@
 -- User appears to be a reserved word
--- -> changed to UserInfo and usr
+-- -> changed to Person and person
 -- Needs to be updated to the docs
-create table UserInfo (
+create table Person (
     id serial primary key,
     forename varchar(50) not null,
     surname varchar(50) not null,
@@ -11,25 +11,25 @@ create table UserInfo (
 
 create table Project (
     id serial primary key,
-    usr integer not null,
+    person integer not null,
     name varchar(100) not null,
     color integer not null,
-    foreign key (usr) references UserInfo(id)
+    foreign key (person) references Person(id)
 );
 
 create table Label (
     id serial primary key,
-    usr integer not null,
+    person integer not null,
     name varchar(100) not null,
     color integer not null,
-    foreign key (usr) references UserInfo(id)
+    foreign key (person) references Person(id)
 );
 
 create table Task (
     id serial primary key,
     project integer not null,
     name varchar(250) not null,
-    priority integer not null,
+    priority integer not null default 4,
     schedule date,
     completed boolean not null,
     foreign key (project) references Project(id)
