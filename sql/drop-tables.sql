@@ -1,5 +1,5 @@
-drop table TaskLabel;
-drop table Task;
-drop table Label;
-drop table Project;
-drop table Person;
+drop table if exists TaskLabel;
+drop table if exists Task;
+drop table if exists Label;
+drop table if exists Project;
+drop table if exists Person;
