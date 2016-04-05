@@ -9,6 +9,7 @@ Viikottaisia virstanpylväitä:
 
 * [HTML-demosivu: seuraavan 7 päivän tehtävät -listausnäkymä](http://tlist.herokuapp.com/html-demo/index.html)
 * [SQL-taulujen luonti](sql/)
+* [ConnectionTest-raportti](http://tlist.herokuapp.com/connectiontest/index.html)
 
 Työn aihe on **tehtävälista**, joka on muokattu versio valmiista aiheesta **[muistilista](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Muistilista.html)**. Kyseessä on siis verkossa toimiva to do -lista, johon voi kirjata lähipäivien ja -viikkojen tehtävät. Olennaisin ero valmiiseen aiheeseen verrattuna on, että tämä sovellus jaottelee tehtävät ensisijaisesti päivämäärän mukaan. Täten sovellus toimii samalla tavalla kuin esimerkiksi [Todoist](http://todoist.com)-verkkopalvelu.
 
