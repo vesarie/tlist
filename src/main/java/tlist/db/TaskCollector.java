@@ -2,7 +2,7 @@ package tlist.db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.util.Date;
 import tlist.models.Task;
 
 public class TaskCollector implements Collector<Task> {
@@ -13,8 +13,7 @@ public class TaskCollector implements Collector<Task> {
         Integer project = rs.getInt("project");
         String name = rs.getString("name");
         int priority = rs.getInt("priority");
-        //LocalDate schedule = new LocalDate(rs.getDate("schedule"));
-        LocalDate schedule = null;
+        Date schedule = rs.getDate("schedule");
         boolean completed = rs.getBoolean("completed");
 
         return new Task(id, project, name, priority, schedule, completed);

@@ -1,6 +1,6 @@
 package tlist.models;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Task {
 
@@ -8,10 +8,10 @@ public class Task {
     private int project;
     private String name;
     private int priority;
-    private LocalDate schedule;
+    private Date schedule;
     private boolean completed;
 
-    public Task(int id, int project, String name, int priority, LocalDate schedule, boolean completed) {
+    public Task(int id, int project, String name, int priority, Date schedule, boolean completed) {
         this.id = id;
         this.project = project;
         this.name = name;
@@ -36,7 +36,7 @@ public class Task {
         return priority;
     }
 
-    public LocalDate getSchedule() {
+    public Date getSchedule() {
         return schedule;
     }
 
@@ -60,7 +60,7 @@ public class Task {
         this.priority = priority;
     }
 
-    public void setSchedule(LocalDate schedule) {
+    public void setSchedule(Date schedule) {
         this.schedule = schedule;
     }
 

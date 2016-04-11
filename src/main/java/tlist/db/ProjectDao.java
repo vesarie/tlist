@@ -27,4 +27,11 @@ public class ProjectDao implements Dao<Project> {
         return query.queryList("SELECT * FROM Project");
     }
 
+    public List<Project> forPerson(int personId) throws SQLException {
+        return query.queryList(""
+                + "SELECT Project.* FROM Project "
+                + "JOIN Person ON Project.person = Person.id "
+                + "WHERE Person.id =  ?", personId);
+    }
+
 }

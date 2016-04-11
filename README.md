@@ -5,6 +5,8 @@ Yleisiä linkkejä:
 * [Sovelluksen kotisivu Herokun palvelimella](http://tlist.herokuapp.com)
 * [Työn dokumentaatio](doc/dokumentaatio.pdf)
 
+Tällä hetkellä sovellus näyttää käyttäjän projektit, ja projekteihin kuuluvia tehtäviä voi muokata.
+
 Viikottaisia virstanpylväitä:
 
 * [HTML-demosivu: seuraavan 7 päivän tehtävät -listausnäkymä](http://tlist.herokuapp.com/html-demo/index.html)

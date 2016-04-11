@@ -27,4 +27,16 @@ public class TaskDao implements Dao<Task> {
         return query.queryList("SELECT * FROM Task");
     }
 
+    public List<Task> forProject(int projectId) throws SQLException {
+        return query.queryList(""
+                + "SELECT Task.* FROM Task "
+                + "JOIN Project ON Task.project = Project.id "
+                + "WHERE Project.id = ?", projectId);
+    }
+
+    public void save(Task task) throws SQLException {
+        query.queryInt("UPDATE SET name = ?, schedule = ?, priority = ? WHERE id = ?",
+                task.getName(), task.getSchedule(), task.getPriority(), task.getId());
+    }
+
 }
