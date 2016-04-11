@@ -43,6 +43,17 @@ public class QueryRunner<T> {
 
         return result;
     }
+    
+    public int update(String query, Object... params) throws SQLException {
+        try (Connection connection = db.getConnection();
+             PreparedStatement stmt = prepare(connection, query, params)) {
+            
+            // DEBUG
+            System.out.println(stmt.toString());
+            
+            return stmt.executeUpdate();
+        }
+    }
 
     public int insert(String query, Object... params) throws SQLException {
         int generatedKey = -1;

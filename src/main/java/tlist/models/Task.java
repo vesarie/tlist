@@ -1,6 +1,8 @@
 package tlist.models;
 
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 
 public class Task {
 
@@ -10,6 +12,8 @@ public class Task {
     private int priority;
     private Date schedule;
     private boolean completed;
+
+    public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public Task(int id, int project, String name, int priority, Date schedule, boolean completed) {
         this.id = id;
@@ -40,6 +44,15 @@ public class Task {
         return schedule;
     }
 
+    public String getScheduleAsString() {
+        if (schedule == null) {
+            return "";
+        }
+
+        //return dateFormat.format(schedule);
+        return schedule.toString();
+    }
+
     public boolean isCompleted() {
         return completed;
     }
@@ -47,7 +60,7 @@ public class Task {
     public void setProject(int project) {
         this.project = project;
     }
-    
+
     public void setProject(Project project) {
         this.project = project.getId();
     }

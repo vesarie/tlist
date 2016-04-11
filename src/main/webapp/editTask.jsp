@@ -2,7 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="modal-dialog" role="document">
     <div class="modal-content">
-        <form action="editTask" method="post" data-async data-target="#editTaskModal">
+        <!-- The AJAX part is in js/tlist.js -->
+        <form action="editTask" method="post"
+              data-async data-target="#editTaskModal"
+              data-saved="<c:out value="${saved}" default="false"/>">
             <input type="hidden" name="id" id="editTask-id" value="${task.id}"/>
 
             <div class="modal-header">
@@ -13,15 +16,17 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="editTask-name" class="control-label">Name:</label>
-                    <input type="text" class="form-control" id="editTask-name" value="${task.name}"/>
+                    <input type="text" class="form-control" name="name" id="editTask-name"
+                           value="<c:out value="${task.name}" default=""/>"/>
                 </div>
                 <div class="form-group">
                     <label for="editTask-schedule" class="control-label">Schedule:</label>
-                    <input type="text" class="form-control" id="editTask-schedule" value="${task.schedule}"/>
+                    <input type="text" class="form-control" name="schedule" id="editTask-schedule"
+                           value="<c:out value="${task.scheduleAsString}" default=""/>"/>
                 </div>
                 <div class="form-group">
                     <label for="editTask-priority" class="control-label">Priority:</label>
-                    <select class="form-control" id="editTask-priority">
+                    <select class="form-control" name="priority" id="editTask-priority">
                         <c:forEach var="p" items="${priorities}">
                             <c:choose>
                                 <c:when test="${task.priority == p}">

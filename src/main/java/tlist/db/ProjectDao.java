@@ -14,7 +14,7 @@ public class ProjectDao implements Dao<Project> {
 
     @Override
     public Project find(int id) throws SQLException {
-        List<Project> list = query.queryList("SELECT * FROM Project WHERE id = ?", id);
+        List<Project> list = query.queryList("SELECT * FROM Project WHERE id = ? ORDER BY id", id);
         if (list.isEmpty()) {
             return null;
         }
@@ -31,7 +31,8 @@ public class ProjectDao implements Dao<Project> {
         return query.queryList(""
                 + "SELECT Project.* FROM Project "
                 + "JOIN Person ON Project.person = Person.id "
-                + "WHERE Person.id =  ?", personId);
+                + "WHERE Person.id =  ? "
+                + "ORDER BY id", personId);
     }
 
 }

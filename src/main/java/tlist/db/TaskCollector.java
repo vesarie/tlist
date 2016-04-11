@@ -2,7 +2,7 @@ package tlist.db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 import tlist.models.Task;
 
 public class TaskCollector implements Collector<Task> {

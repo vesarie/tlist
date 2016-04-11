@@ -1,6 +1,7 @@
 package tlist.servlets;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,14 +41,18 @@ public class EditTaskServlet extends HttpServlet {
         try {
             int taskId = Integer.parseInt(request.getParameter("id"));
             Task task = taskDao.find(taskId);
-            
-            
-            
+
+            task.setName(request.getParameter("name"));
+            task.setSchedule(Date.valueOf(request.getParameter("schedule")));
+            task.setPriority(Integer.parseInt(request.getParameter("priority")));
+
+            taskDao.save(task);
             request.setAttribute("task", task);
+            request.setAttribute("saved", true);
+            
+            System.out.println("task saved: " + taskId + " " + task.getName());
+            
             request.setAttribute("priorities", new int[]{1, 2, 3, 4});
-            
-            System.out.println("editTaskServlet.processRequest: " + taskId + " " + task.getName());
-            
         } catch (SQLException e) {
             System.out.println("ERROR: " + e);
             throw new RuntimeException(e);

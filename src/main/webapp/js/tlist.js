@@ -52,6 +52,10 @@ $('.modal').on('submit', 'form[data-async]', function (event) {
         data: $form.serialize(),
         success: function (data, status) {
             $target.html(data);
+            $('#editTask-schedule').datepicker();
+            if ($form.attr('data-saved')) {
+                location.reload(true);
+            }
         }
     });
 

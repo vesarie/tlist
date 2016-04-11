@@ -24,18 +24,22 @@ public class TaskDao implements Dao<Task> {
 
     @Override
     public List<Task> find() throws SQLException {
-        return query.queryList("SELECT * FROM Task");
+        return query.queryList("SELECT * FROM Task ORDER BY id");
     }
 
     public List<Task> forProject(int projectId) throws SQLException {
         return query.queryList(""
                 + "SELECT Task.* FROM Task "
                 + "JOIN Project ON Task.project = Project.id "
-                + "WHERE Project.id = ?", projectId);
+                + "WHERE Project.id = ? "
+                + "ORDER BY id", projectId);
     }
 
     public void save(Task task) throws SQLException {
-        query.queryInt("UPDATE SET name = ?, schedule = ?, priority = ? WHERE id = ?",
+        query.update(""
+                + "UPDATE Task "
+                + "SET name = ?, schedule = ?, priority = ? "
+                + "WHERE id = ?",
                 task.getName(), task.getSchedule(), task.getPriority(), task.getId());
     }
 
