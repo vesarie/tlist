@@ -47,10 +47,6 @@ public class QueryRunner<T> {
     public int update(String query, Object... params) throws SQLException {
         try (Connection connection = db.getConnection();
              PreparedStatement stmt = prepare(connection, query, params)) {
-            
-            // DEBUG
-            System.out.println(stmt.toString());
-            
             return stmt.executeUpdate();
         }
     }
