@@ -7,7 +7,11 @@ Yleisiä linkkejä:
 
 Tällä hetkellä sovellus näyttää käyttäjän projektit, ja projekteihin kuuluvia tehtäviä voi muokata.
 
-Viikottaisia virstanpylväitä:
+* Tehtäville on toteutettu **CRUD**-nelikko.
+* Tehtävien lisäys- ja muokkaus-lomakkeet validoidaan. Tyhjä päivämäärä kuitenkin sallitaan tarkoituksella.
+* Kirjautuminen puuttuu vielä.
+
+Aikaisempia virstanpylväitä:
 
 * [HTML-demosivu: seuraavan 7 päivän tehtävät -listausnäkymä](http://tlist.herokuapp.com/html-demo/index.html)
 * [SQL-taulujen luonti](sql/)
