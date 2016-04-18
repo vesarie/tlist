@@ -3,6 +3,7 @@ package tlist.db;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
+import tlist.models.Priority;
 import tlist.models.Task;
 
 public class TaskCollector implements Collector<Task> {
@@ -12,7 +13,7 @@ public class TaskCollector implements Collector<Task> {
         Integer id = rs.getInt("id");
         Integer project = rs.getInt("project");
         String name = rs.getString("name");
-        int priority = rs.getInt("priority");
+        Priority priority = Priority.convert(rs.getInt("priority"));
         Date schedule = rs.getDate("schedule");
         boolean completed = rs.getBoolean("completed");
 

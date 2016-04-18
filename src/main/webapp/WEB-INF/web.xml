@@ -16,6 +16,14 @@
         <servlet-name>editTask</servlet-name>
         <servlet-class>tlist.servlets.EditTaskServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>deleteTask</servlet-name>
+        <servlet-class>tlist.servlets.DeleteTaskServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>createTask</servlet-name>
+        <servlet-class>tlist.servlets.CreateTaskServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>hello</servlet-name>
         <url-pattern>/hello</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>editTask</servlet-name>
         <url-pattern>/editTask</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteTask</servlet-name>
+        <url-pattern>/deleteTask</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>createTask</servlet-name>
+        <url-pattern>/createTask</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -9,13 +9,13 @@ public class Task {
     private final int id;
     private int project;
     private String name;
-    private int priority;
+    private Priority priority;
     private Date schedule;
     private boolean completed;
 
     public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public Task(int id, int project, String name, int priority, Date schedule, boolean completed) {
+    public Task(int id, int project, String name, Priority priority, Date schedule, boolean completed) {
         this.id = id;
         this.project = project;
         this.name = name;
@@ -36,7 +36,7 @@ public class Task {
         return name;
     }
 
-    public int getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
@@ -69,7 +69,7 @@ public class Task {
         this.name = name;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 

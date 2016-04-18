@@ -3,6 +3,7 @@ package tlist.db;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
+import tlist.models.Priority;
 import tlist.models.Task;
 
 public class TaskDao implements Dao<Task> {
@@ -41,14 +42,14 @@ public class TaskDao implements Dao<Task> {
                 + "UPDATE Task "
                 + "SET name = ?, schedule = ?, priority = ? "
                 + "WHERE id = ?",
-                task.getName(), task.getSchedule(), task.getPriority(), task.getId());
+                task.getName(), task.getSchedule(), task.getPriority().toInt(), task.getId());
     }
 
-    public int insert(int projectId, String name, int priority, Date schedule) throws SQLException {
+    public int insert(int projectId, String name, Priority priority, Date schedule) throws SQLException {
         return query.insert(""
                 + "INSERT INTO Task "
                 + "(project, name, priority, schedule, completed) "
-                + "VALUES (?, ?, ?, ?)", projectId, name, priority, schedule, false);
+                + "VALUES (?, ?, ?, ?, ?)", projectId, name, priority.toInt(), schedule, false);
     }
     
     public int delete(int id) throws SQLException {

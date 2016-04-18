@@ -39,20 +39,23 @@ public class EditTaskServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try {
-            int taskId = Integer.parseInt(request.getParameter("id"));
+            int taskId = ServletUtil.parseInt(request.getParameter("id"), -1);
             Task task = taskDao.find(taskId);
 
-            task.setName(request.getParameter("name"));
-            task.setSchedule(Date.valueOf(request.getParameter("schedule")));
-            task.setPriority(Integer.parseInt(request.getParameter("priority")));
+            TaskValidator validator = new TaskValidator(request);
+            validator.readInto(task);
 
-            taskDao.save(task);
-            request.setAttribute("task", task);
-            request.setAttribute("saved", true);
-            
-            System.out.println("task saved: " + taskId + " " + task.getName());
-            
-            request.setAttribute("priorities", new int[]{1, 2, 3, 4});
+            if (validator.getErrorCount() == 0) {
+                taskDao.save(task);
+                request.setAttribute("saved", true);
+                System.out.println("task saved: " + taskId + " " + task.getName());
+            }
+
+            request.setAttribute("id", task.getId());
+            request.setAttribute("name", request.getParameter("name"));
+            request.setAttribute("schedule", request.getParameter("schedule"));
+            request.setAttribute("priority", task.getPriority().toInt());
+            request.setAttribute("priorities", Priority.list);
         } catch (SQLException e) {
             System.out.println("ERROR: " + e);
             throw new RuntimeException(e);

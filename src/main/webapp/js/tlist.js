@@ -5,42 +5,47 @@ $.datepicker.setDefaults({
     dateFormat: "yy-mm-dd"
 });
 
+$(document).ready(function ($) {
+    $('.btn-submit-on-click').on('click', function () {
+        $($(this).data('form')).submit();
+    });
+});
+
+// Initializes the "Create task" dialog
+$('#createTaskModal').on('show.bs.modal', function (event) {
+    $('#createTask-name').val('');
+    $('#createTask-schedule').val('');
+    $('#createTask-priority').val(4);
+
+    $('#createTask-name-msg').text('');
+    $('#createTask-schedule-msg').text('');
+    $('#createTask-priority-msg').text('');
+
+    $(this).find('input[data-datepicker]').datepicker();
+});
+
 // Initializes the "Edit task" dialog
 $('#editTaskModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var id = button.data('taskId');
-    var schedule = button.data('taskSchedule');
     var priority = button.data('taskPriority');
-
+    var schedule = button.data('taskSchedule');
     var name = $('#task' + id + '-name').text();
 
-    $('#editTask-id').val(id);
-    $('#editTask-name').val(name);
-    $('#editTask-schedule').val(schedule);
-    $('#editTask-priority-' + priority).attr('selected', 'selected');
-    
-    $('#editTask-schedule').datepicker();
-});
+    $('#editTask').data('saved', false);
 
-//$('.modal').on('show.bs.modal', 'form[data-async]', function (event) {
-//    var button = $(event.relatedTarget);
-//    var id = button.data('taskId');
-//    var $form = $(this);
-//    var $idInput = $($form.attr('data-id-input'));
-//    var $target = $($form.attr('data-target'));
-//    
-//    $idInput.val(id);
-//
-//    $.ajax({
-//        type: $form.attr('method'),
-//        url: $form.attr('action'),
-//        data: $form.serialize(),
-//        
-//        success: function (data, status) {
-//            $target.html(data);
-//        }
-//    });
-//});
+    $('#editTask-id').val(id);
+    $('#deleteTask-id').val(id);
+    $('#editTask-name').val(name);
+    $('#editTask-priority').val(priority);
+    $('#editTask-schedule').val(schedule);
+
+    $('#editTask-name-msg').text('');
+    $('#editTask-priority-msg').text('');
+    $('#editTask-schedule-msg').text('');
+
+    $(this).find('input[data-datepicker]').datepicker();
+});
 
 $('.modal').on('submit', 'form[data-async]', function (event) {
     var $form = $(this);
@@ -52,8 +57,12 @@ $('.modal').on('submit', 'form[data-async]', function (event) {
         data: $form.serialize(),
         success: function (data, status) {
             $target.html(data);
-            $('#editTask-schedule').datepicker();
-            if ($form.attr('data-saved')) {
+            $form = $target.find('form[data-async]');
+            $form.find('input[data-datepicker]').datepicker();
+            $('.btn-submit-on-click').on('click', function () {
+                $($(this).data('form')).submit();
+            });
+            if ($form.data('saved')) {
                 location.reload(true);
             }
         }

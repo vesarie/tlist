@@ -1,6 +1,7 @@
 package tlist.servlets;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import tlist.db.*;
 import tlist.models.*;
 
-public class ProjectServlet extends HttpServlet {
+public class CreateTaskServlet extends HttpServlet {
 
     private Database db;
     private PersonDao personDao;
@@ -37,24 +38,35 @@ public class ProjectServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        try {
-            int projectId = Integer.parseInt(request.getParameter("id"));
-            Project project = projectDao.find(projectId);
-            request.setAttribute("project", project);
+        TaskValidator validator = new TaskValidator(request);
 
-            request.setAttribute("person", personDao.find(1));
-            request.setAttribute("projects", projectDao.forPerson(1));
-            request.setAttribute("tasks", taskDao.forProject(projectId));
-            
-            Task emptyTask = new Task(0, projectId, "", Priority.defaultPriority, null, false);
-            request.setAttribute("task", emptyTask);
+        String name = validator.readName();
+        Date schedule = validator.readSchedule();
+        Priority priority = validator.readPriority();
+
+        try {
+            int projectId = Integer.parseInt(request.getParameter("project"));
+            Project project = projectDao.find(projectId);
+
+            if (validator.getErrorCount() == 0) {
+                int taskId = taskDao.insert(projectId, name, priority, schedule);
+
+                Task task = taskDao.find(taskId);
+                request.setAttribute("saved", true);
+                System.out.println("task created: " + taskId + " " + task.getName());
+            }
+
+            request.setAttribute("project", project);
+            request.setAttribute("name", request.getParameter("name"));
+            request.setAttribute("schedule", request.getParameter("schedule"));
+            request.setAttribute("priority", priority.toInt());
             request.setAttribute("priorities", Priority.list);
         } catch (SQLException e) {
             System.out.println("ERROR: " + e);
             throw new RuntimeException(e);
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("project.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("createTask.jsp");
         dispatcher.forward(request, response);
     }
 
