@@ -19,7 +19,7 @@
             </div>
 
             <div class="modal-body">
-                <div class="form-group ${nameErrorMsg == null ? '' : 'hasError'}">
+                <div class="form-group ${nameErrorMsg == null ? '' : 'has-error'}">
                     <label for="${action}-name" class="control-label">Name:</label>
                     <input type="text" class="form-control" name="name" id="${action}-name"
                            value="<c:out value="${name}" default=""/>"
@@ -29,7 +29,7 @@
                     </span>
                 </div>
 
-                <div class="form-group ${scheduleErrorMsg == null ? '' : 'hasError'}">
+                <div class="form-group ${scheduleErrorMsg == null ? '' : 'has-error'}">
                     <label for="${action}-schedule" class="control-label">Schedule:</label>
                     <input type="text" class="form-control" name="schedule" id="${action}-schedule"
                            data-datepicker value="<c:out value="${schedule}" default=""/>"
@@ -39,7 +39,7 @@
                     </span>
                 </div>
 
-                <div class="form-group ${priorityErrorMsg == null ? '' : 'hasError'}">
+                <div class="form-group ${priorityErrorMsg == null ? '' : 'has-error'}">
                     <label for="${action}-priority" class="control-label">Priority:</label>
                     <select class="form-control" name="priority" id="${action}-priority" aria-describedby="${action}-priority-msg">
 

@@ -17,9 +17,8 @@ $('#createTaskModal').on('show.bs.modal', function (event) {
     $('#createTask-schedule').val('');
     $('#createTask-priority').val(4);
 
-    $('#createTask-name-msg').text('');
-    $('#createTask-schedule-msg').text('');
-    $('#createTask-priority-msg').text('');
+    $(this).find('div.has-error').removeClass('has-error');
+    $(this).find('span.help-block').text('');
 
     $(this).find('input[data-datepicker]').datepicker();
 });
@@ -40,9 +39,8 @@ $('#editTaskModal').on('show.bs.modal', function (event) {
     $('#editTask-priority').val(priority);
     $('#editTask-schedule').val(schedule);
 
-    $('#editTask-name-msg').text('');
-    $('#editTask-priority-msg').text('');
-    $('#editTask-schedule-msg').text('');
+    $(this).find('div.has-error').removeClass('has-error');
+    $(this).find('span.help-block').text('');
 
     $(this).find('input[data-datepicker]').datepicker();
 });
@@ -55,6 +53,7 @@ $('.modal').on('submit', 'form[data-async]', function (event) {
         type: $form.attr('method'),
         url: $form.attr('action'),
         data: $form.serialize(),
+        
         success: function (data, status) {
             $target.html(data);
             $form = $target.find('form[data-async]');
