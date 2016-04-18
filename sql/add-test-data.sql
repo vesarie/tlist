@@ -1,6 +1,3 @@
--- User appears to be a reserved word
--- -> changed to Person and person
--- Needs to be updated to the docs
 insert into Person (forename, surname, email, password) values ('Alex',  'Adams', 'alex.adams@example.com', '');
 insert into Person (forename, surname, email, password) values ('Bill',  'Baker', 'bill.baker@example.com', '');
 insert into Person (forename, surname, email, password) values ('Chloe', 'Clark', 'chloe.clark@example.com', '');

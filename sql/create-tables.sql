@@ -1,6 +1,3 @@
--- User appears to be a reserved word
--- -> changed to Person and person
--- Needs to be updated to the docs
 create table Person (
     id serial primary key,
     forename varchar(50) not null,
