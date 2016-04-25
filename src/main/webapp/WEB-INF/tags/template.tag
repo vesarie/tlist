@@ -1,32 +1,15 @@
 <%@tag description="Page template" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@attribute name="pageTitle" required="true"%>
 <%@attribute name="projects" type="java.util.List" required="true"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>${pageTitle}</title>
-
-    <link href="css/jquery-ui.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-    <link href="css/tlist.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
-
-<body>
-
+<t:base pageTitle="${pageTitle}">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <button type="button" class="navbar-toggle collapsed"
+                        data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -37,8 +20,18 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <!--<li><a href="#">Add task</a></li>-->
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="#">Help</a></li>
+                    <li>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-cog"></span> Settings
+                        </a>
+                    </li>
+                    <li>
+                        <form class="navbar-form" name="logoutForm" method="post" action="logout">
+                            <button type="submit" class="btn btn-link">
+                                <span class="glyphicon glyphicon-log-out"></span> Log out
+                            </button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -56,12 +49,12 @@
                         <c:choose>
                             <c:when test="${p.id == project.id}">
                                 <li class="active"><a href="project?id=${p.id}">${p.name} <span class="sr-only">(current)</span></a></li>
-                            </c:when>
-                            <c:otherwise>
+                                </c:when>
+                                <c:otherwise>
                                 <li><a href="project?id=${p.id}">${p.name}</a></li>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
                 </ul>
                 <!--
                 <ul class="nav nav-sidebar">
@@ -82,12 +75,4 @@
             </div>
         </div>
     </div>
-
-    <script src="js/jquery-1.12.2.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/ie10-viewport-bug-workaround.js"></script>
-    <script src="js/tlist.js"></script>
-
-</body>
-</html>
+</t:base>

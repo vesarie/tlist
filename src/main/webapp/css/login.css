@@ -1,0 +1,15 @@
+/*
+ * Login form
+ */
+
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  /*background-color: #eee;*/
+}
+
+.form-login {
+  max-width: 300px;
+  padding: 15px;
+  margin: 0 auto;
+}

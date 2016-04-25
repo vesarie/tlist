@@ -5,11 +5,13 @@ Yleisiä linkkejä:
 * [Sovelluksen kotisivu Herokun palvelimella](http://tlist.herokuapp.com)
 * [Työn dokumentaatio](doc/dokumentaatio.pdf)
 
+**Testitunnus**: test@user.com, pwd
+
 Tällä hetkellä sovellus näyttää käyttäjän projektit, ja projekteihin kuuluvia tehtäviä voi muokata.
 
 * Tehtäville on toteutettu **CRUD**-nelikko.
 * Tehtävien lisäys- ja muokkaus-lomakkeet validoidaan. Tyhjä päivämäärä kuitenkin sallitaan tarkoituksella.
-* Kirjautuminen puuttuu vielä.
+* Käyttäjä voi kirjautua sisään ja ulos. Sivuja ei näytetä ellei käyttäjä ole kirjautunut.
 
 Aikaisempia virstanpylväitä:
 
