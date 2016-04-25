@@ -2,10 +2,8 @@
 
 Yleisiä linkkejä:
 
-* [Sovelluksen kotisivu Herokun palvelimella](http://tlist.herokuapp.com)
+* [Sovelluksen kotisivu Herokun palvelimella](http://tlist.herokuapp.com) (**test&#64;user.com, pwd**)
 * [Työn dokumentaatio](doc/dokumentaatio.pdf)
-
-**Testitunnus**: test@user.com, pwd
 
 Tällä hetkellä sovellus näyttää käyttäjän projektit, ja projekteihin kuuluvia tehtäviä voi muokata.
 
