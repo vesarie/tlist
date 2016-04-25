@@ -2,28 +2,13 @@ package tlist.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import javax.servlet.RequestDispatcher;
+import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import tlist.db.*;
 import tlist.models.*;
 
-public class ProjectServlet extends HttpServlet {
-
-    private Database db;
-    private PersonDao personDao;
-    private ProjectDao projectDao;
-    private TaskDao taskDao;
-
-    @Override
-    public void init() throws ServletException {
-        db = DatabaseConfig.getInstance(getServletContext());
-        personDao = new PersonDao(db);
-        projectDao = new ProjectDao(db);
-        taskDao = new TaskDao(db);
-    }
+public class ProjectServlet extends BaseServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,27 +20,30 @@ public class ProjectServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
-        try {
-            int projectId = Integer.parseInt(request.getParameter("id"));
-            Project project = projectDao.find(projectId);
-            request.setAttribute("project", project);
-
-            request.setAttribute("person", personDao.find(1));
-            request.setAttribute("projects", projectDao.forPerson(1));
-            request.setAttribute("tasks", taskDao.forProject(projectId));
-            
-            Task emptyTask = new Task(0, projectId, "", Priority.defaultPriority, null, false);
-            request.setAttribute("task", emptyTask);
-            request.setAttribute("priorities", Priority.list);
-        } catch (SQLException e) {
-            System.out.println("ERROR: " + e);
-            throw new RuntimeException(e);
+        if (!initialize(request, response, true)) {
+            return;
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("project.jsp");
-        dispatcher.forward(request, response);
+        try {
+            System.out.println("person=" + person);
+            System.out.println("projectDao" + projectDao);
+
+            List<Project> projects = projectDao.forPerson(person.getId());
+            if (projects.isEmpty()) {
+                // todo
+            }
+
+            Project project = getProject();
+
+            setAttribute("project", project);
+            setAttribute("projects", projects);
+            setAttribute("tasks", taskDao.forProject(project.getId()));
+            setAttribute("priorities", Priority.list);
+        } catch (SQLException e) {
+            error(e);
+        }
+
+        show("project.jsp");
     }
 
     /**
@@ -82,6 +70,25 @@ public class ProjectServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
+    }
+
+    private Project getProject() throws SQLException {
+        int projectId = ServletUtil.parseInt(getParameter("id"), -1);
+
+        if (projectId == -1) {
+            return getFirstProject();
+        }
+
+        return projectDao.find(projectId);
+    }
+
+    private Project getFirstProject() throws SQLException {
+        List<Project> projects = projectDao.forPerson(person.getId());
+        if (projects.isEmpty()) {
+            return null;
+        }
+
+        return projects.get(0);
     }
 
     /**

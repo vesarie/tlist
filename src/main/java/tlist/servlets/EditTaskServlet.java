@@ -1,30 +1,13 @@
 package tlist.servlets;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import tlist.db.*;
 import tlist.models.*;
 
-public class EditTaskServlet extends HttpServlet {
-
-    private Database db;
-    private PersonDao personDao;
-    private ProjectDao projectDao;
-    private TaskDao taskDao;
-
-    @Override
-    public void init() throws ServletException {
-        db = DatabaseConfig.getInstance(getServletContext());
-        personDao = new PersonDao(db);
-        projectDao = new ProjectDao(db);
-        taskDao = new TaskDao(db);
-    }
+public class EditTaskServlet extends BaseServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +19,12 @@ public class EditTaskServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        if (!initialize(request, response, true)) {
+            return;
+        }
 
         try {
-            int taskId = ServletUtil.parseInt(request.getParameter("id"), -1);
+            int taskId = ServletUtil.parseInt(getParameter("id"), -1);
             Task task = taskDao.find(taskId);
 
             TaskValidator validator = new TaskValidator(request);
@@ -47,22 +32,21 @@ public class EditTaskServlet extends HttpServlet {
 
             if (validator.getErrorCount() == 0) {
                 taskDao.save(task);
-                request.setAttribute("saved", true);
+                setAttribute("saved", true);
                 System.out.println("task saved: " + taskId + " " + task.getName());
             }
 
-            request.setAttribute("id", task.getId());
-            request.setAttribute("name", request.getParameter("name"));
-            request.setAttribute("schedule", request.getParameter("schedule"));
-            request.setAttribute("priority", task.getPriority().toInt());
-            request.setAttribute("priorities", Priority.list);
+            setAttribute("id", task.getId());
+            setAttribute("name", getParameter("name"));
+            setAttribute("schedule", getParameter("schedule"));
+            setAttribute("priority", task.getPriority().toInt());
+            setAttribute("priorities", Priority.list);
         } catch (SQLException e) {
             System.out.println("ERROR: " + e);
             throw new RuntimeException(e);
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("editTask.jsp");
-        dispatcher.forward(request, response);
+        show("editTask.jsp");
     }
 
     /**

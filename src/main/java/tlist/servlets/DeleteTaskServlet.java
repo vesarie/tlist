@@ -3,26 +3,11 @@ package tlist.servlets;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import tlist.db.*;
 import tlist.models.*;
 
-public class DeleteTaskServlet extends HttpServlet {
-
-    private Database db;
-    private PersonDao personDao;
-    private ProjectDao projectDao;
-    private TaskDao taskDao;
-
-    @Override
-    public void init() throws ServletException {
-        db = DatabaseConfig.getInstance(getServletContext());
-        personDao = new PersonDao(db);
-        projectDao = new ProjectDao(db);
-        taskDao = new TaskDao(db);
-    }
+public class DeleteTaskServlet extends BaseServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,10 +19,12 @@ public class DeleteTaskServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        if (!initialize(request, response, true)) {
+            return;
+        }
 
         try {
-            int taskId = ServletUtil.parseInt(request.getParameter("id"), -1);
+            int taskId = ServletUtil.parseInt(getParameter("id"), -1);
             if (taskId == -1) {
                 printError(response, "invalid or missing id");
                 return;
@@ -52,10 +39,9 @@ public class DeleteTaskServlet extends HttpServlet {
             taskDao.delete(taskId);
             System.out.println("task deleted: " + taskId + " " + task.getName());
 
-            response.sendRedirect("project?id=" + task.getProject());
+            redirect("project?id=" + task.getProject());
         } catch (SQLException e) {
-            System.out.println("SQL ERROR: " + e);
-            throw new RuntimeException(e);
+            error(e);
         }
     }
 
