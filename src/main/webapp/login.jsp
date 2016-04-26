@@ -8,7 +8,6 @@
     </c:if>
 
     <c:set var="formGroup" value="${invalidLogin ? 'form-group has-error' : 'form-group'}"/>
-    <!-- c:set var="formGroup" value="form-group"/>-->
 
     <div class="container-fluid">
         <form method="post" action="login" class="form-login">

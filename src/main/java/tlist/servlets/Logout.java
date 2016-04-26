@@ -1,13 +1,11 @@
 package tlist.servlets;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class HelloServlet extends HttpServlet {
+public class Logout extends BaseServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -19,12 +17,12 @@ public class HelloServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        if (!initialize(request, response, false)) {
+            return;
+        }
 
-        request.setAttribute("viesti", "morjens!");
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("hello.jsp");
-        dispatcher.forward(request, response);
+        logout();
+        redirect("login");
     }
 
     /**

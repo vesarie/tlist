@@ -24,14 +24,14 @@ public class ProjectDao implements Dao<Project> {
 
     @Override
     public List<Project> find() throws SQLException {
-        return query.queryList("SELECT * FROM Project");
+        return query.queryList("SELECT * FROM Project ORDER BY id");
     }
 
     public List<Project> forPerson(int personId) throws SQLException {
         return query.queryList(""
                 + "SELECT Project.* FROM Project "
-                + "JOIN Person ON Project.person = Person.id "
-                + "WHERE Person.id =  ? "
+                + "JOIN Person ON Person.id = Project.person "
+                + "WHERE Person.id = ? "
                 + "ORDER BY id", personId);
     }
 
