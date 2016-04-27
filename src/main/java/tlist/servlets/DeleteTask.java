@@ -16,25 +16,32 @@ public class DeleteTask extends BaseServlet {
         }
 
         try {
-            int taskId = ServletUtil.parseInt(getParameter("id"), -1);
-            if (taskId == -1) {
-                printError(response, "invalid or missing id");
-                return;
-            }
-
-            Task task = taskDao.find(taskId);
-            if (task == null) {
-                printError(response, "task not found");
-                return;
-            }
-
-            taskDao.delete(taskId);
-            System.out.println("task deleted: " + taskId + " " + task.getName());
-
-            redirect("project?id=" + task.getProject());
+            process(request, response);
         } catch (SQLException e) {
             error(e);
         }
+    }
+
+    private void process(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        Task task = getTask();
+
+        if (task == null) {
+            printError(response, "task not found");
+            return;
+        }
+
+        taskDao.delete(task.getId());
+
+        redirect(task.getProject());
+    }
+
+    private Task getTask() throws SQLException {
+        int taskId = ServletUtil.parseInt(getParameter("id"), -1);
+        return taskDao.find(taskId);
+    }
+
+    private void redirect(int projectId) throws IOException {
+        redirect("project?id=" + projectId);
     }
 
     private void printError(HttpServletResponse response, String msg) throws IOException {

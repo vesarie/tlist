@@ -37,7 +37,7 @@ public class TaskDao implements Dao<Task> {
                 + "ORDER BY id", projectId);
     }
 
-    public int save(Task task) throws SQLException {
+    public int update(Task task) throws SQLException {
         return query.update(""
                 + "UPDATE Task "
                 + "SET name = ?, schedule = ?, priority = ? "

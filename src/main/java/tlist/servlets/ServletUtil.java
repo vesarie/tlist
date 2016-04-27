@@ -5,8 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public class ServletUtil {
 
-    public static final String msgSuffix = "ErrorMsg";
-
     public static int parseInt(String s, int defaultValue) {
         try {
             if (s == null) {
@@ -37,20 +35,5 @@ public class ServletUtil {
 
         return value.trim();
     }
-
-//    public static int getIntParameter(HttpServletRequest request, String name, int defaultValue) {
-//        try {
-//            String s = request.getParameter(name);
-//            if (s == null) {
-//                request.setAttribute(name + msgSuffix, "Missing parameter: " + name);
-//                return defaultValue;
-//            }
-//
-//            return Integer.parseInt(s);
-//        } catch (NumberFormatException e) {
-//            request.setAttribute(name + msgSuffix, "Invalid parameter: " + name);
-//            return defaultValue;
-//        }
-//    }
 
 }

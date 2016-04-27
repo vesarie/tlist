@@ -16,34 +16,47 @@ public class CreateTask extends BaseServlet {
             return;
         }
 
-        TaskValidator validator = new TaskValidator(request);
-
-        String name = validator.readName();
-        Date schedule = validator.readSchedule();
-        Priority priority = validator.readPriority();
-
         try {
-            int projectId = ServletUtil.parseInt(getParameter("project"), -1);
-            Project project = projectDao.find(projectId);
-
-            if (validator.getErrorCount() == 0) {
-                int taskId = taskDao.insert(projectId, name, priority, schedule);
-
-                Task task = taskDao.find(taskId);
-                setAttribute("saved", true);
-                System.out.println("task created: " + taskId + " " + task.getName());
-            }
-
-            setAttribute("project", project);
-            setAttribute("name", getParameter("name"));
-            setAttribute("schedule", getParameter("schedule"));
-            setAttribute("priority", priority.toInt());
-            setAttribute("priorities", Priority.list);
+            process(request);
         } catch (SQLException e) {
             error(e);
         }
 
         show("createTask.jsp");
+    }
+
+    private void process(HttpServletRequest request) throws SQLException {
+        Project project = getProject();
+
+        TaskReader reader = new TaskReader(request);
+
+        String name = reader.getName();
+        Date schedule = reader.getSchedule();
+        Priority priority = reader.getPriority();
+
+        if (reader.getErrorCount() == 0) {
+            create(project, name, priority, schedule);
+        }
+
+        setAttributes(project, priority);
+    }
+
+    private Project getProject() throws SQLException {
+        int projectId = ServletUtil.parseInt(getParameter("project"), -1);
+        return projectDao.find(projectId);
+    }
+
+    private void create(Project project, String name, Priority priority, Date schedule) throws SQLException {
+        taskDao.insert(project.getId(), name, priority, schedule);
+        setAttribute("saved", true);
+    }
+
+    private void setAttributes(Project project, Priority priority) {
+        setAttribute("project", project);
+        setAttribute("name", getParameter("name"));
+        setAttribute("schedule", getParameter("schedule"));
+        setAttribute("priority", priority.toInt());
+        setAttribute("priorities", Priority.list);
     }
 
 }

@@ -5,20 +5,20 @@ import javax.servlet.http.HttpServletRequest;
 import tlist.models.Priority;
 import tlist.models.Task;
 
-public class TaskValidator extends FormValidator<Task> {
+public class TaskReader extends FormReader<Task> {
 
-    public TaskValidator(HttpServletRequest request) {
+    public TaskReader(HttpServletRequest request) {
         super(request);
     }
 
     @Override
-    public void readInto(Task task) {
-        task.setName(readName());
-        task.setSchedule(readSchedule());
-        task.setPriority(readPriority());
+    public void update(Task task) {
+        task.setName(getName());
+        task.setSchedule(getSchedule());
+        task.setPriority(getPriority());
     }
 
-    public String readName() {
+    public String getName() {
         String name = ServletUtil.getStringParameter(request, "name");
         if (name.isEmpty()) {
             setErrorMsg("name", "Name is required.");
@@ -27,7 +27,7 @@ public class TaskValidator extends FormValidator<Task> {
         return name;
     }
 
-    public Date readSchedule() {
+    public Date getSchedule() {
         String scheduleStr = ServletUtil.getStringParameter(request, "schedule");
         if (scheduleStr.isEmpty()) {
             return null;
@@ -41,7 +41,7 @@ public class TaskValidator extends FormValidator<Task> {
         return schedule;
     }
 
-    public Priority readPriority() {
+    public Priority getPriority() {
         int priority = ServletUtil.parseInt(request.getParameter("priority"), -1);
         if (priority < 1 || priority > 4) {
             setErrorMsg("priority", "Priority must be in the interval 1-4");

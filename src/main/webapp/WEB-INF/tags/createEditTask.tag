@@ -7,7 +7,7 @@
         <!-- The AJAX part is in js/tlist.js -->
         <form action="${action}" method="post" id="${action}"
               data-async data-target="#${action}Modal"
-              data-saved="<c:out value="${saved}" default="false"/>">
+              data-saved="${saved == null ? 'false' : saved}">
             <input type="hidden" name="id" id="${action}-id" value="${id == null ? '' : id}"/>
             <input type="hidden" name="project" value="${project == null ? '' : project.id}"/>
 
