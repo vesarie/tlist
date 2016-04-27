@@ -9,20 +9,12 @@ import tlist.models.*;
 
 public class DeleteTask extends BaseServlet {
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (!initialize(request, response, true)) {
-            return;
-        }
-
-        try {
-            process(request, response);
-        } catch (SQLException e) {
-            error(e);
-        }
+    public DeleteTask() {
+        super(true);
     }
 
-    private void process(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    @Override
+    protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         Task task = getTask();
 
         if (task == null) {

@@ -1,6 +1,7 @@
 package tlist.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,12 +9,12 @@ import tlist.models.*;
 
 public class Login extends BaseServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (!initialize(request, response, false)) {
-            return;
-        }
+    public Login() {
+        super(false);
+    }
 
+    @Override
+    protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         if (person != null) {
             redirect("project");
             return;
@@ -23,11 +24,7 @@ public class Login extends BaseServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (!initialize(request, response, false)) {
-            return;
-        }
-
+    protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         Person p = login(email, password);

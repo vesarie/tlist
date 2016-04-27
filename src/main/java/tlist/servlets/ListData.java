@@ -8,17 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ListData extends BaseServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        initialize(request, response, false);
+    public ListData() {
+        super(false);
+    }
 
-        try {
-            setAttribute("persons", personDao.find());
-            setAttribute("projects", projectDao.find());
-            setAttribute("tasks", taskDao.find());
-        } catch (SQLException e) {
-            error(e);
-        }
+    @Override
+    protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        setAttribute("persons", personDao.find());
+        setAttribute("projects", projectDao.find());
+        setAttribute("tasks", taskDao.find());
 
         show("listData.jsp");
     }

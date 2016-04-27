@@ -10,27 +10,23 @@ import tlist.models.*;
 
 public class ViewProject extends BaseServlet {
 
+    public ViewProject() {
+        super(true);
+    }
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (!initialize(request, response, true)) {
-            return;
+    protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        List<Project> projects = projectDao.forPerson(person.getId());
+        if (projects.isEmpty()) {
+            // todo
         }
 
-        try {
-            List<Project> projects = projectDao.forPerson(person.getId());
-            if (projects.isEmpty()) {
-                // todo
-            }
+        Project project = getProject();
 
-            Project project = getProject();
-
-            setAttribute("project", project);
-            setAttribute("projects", projects);
-            setAttribute("tasks", taskDao.forProject(project.getId()));
-            setAttribute("priorities", Priority.list);
-        } catch (SQLException e) {
-            error(e);
-        }
+        setAttribute("project", project);
+        setAttribute("projects", projects);
+        setAttribute("tasks", taskDao.forProject(project.getId()));
+        setAttribute("priorities", Priority.list);
 
         show("project.jsp");
     }

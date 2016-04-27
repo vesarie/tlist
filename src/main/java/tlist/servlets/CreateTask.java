@@ -10,22 +10,12 @@ import tlist.models.*;
 
 public class CreateTask extends BaseServlet {
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (!initialize(request, response, true)) {
-            return;
-        }
-
-        try {
-            process(request);
-        } catch (SQLException e) {
-            error(e);
-        }
-
-        show("createTask.jsp");
+    public CreateTask() {
+        super(true);
     }
 
-    private void process(HttpServletRequest request) throws SQLException {
+    @Override
+    protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         Project project = getProject();
 
         TaskReader reader = new TaskReader(request);
@@ -39,6 +29,7 @@ public class CreateTask extends BaseServlet {
         }
 
         setAttributes(project, priority);
+        show("createTask.jsp");
     }
 
     private Project getProject() throws SQLException {

@@ -18,10 +18,16 @@ public class BaseServlet extends HttpServlet {
     protected ProjectDao projectDao;
     protected TaskDao taskDao;
 
+    private final boolean isLoginRequired;
+
     protected HttpServletRequest request;
     protected HttpServletResponse response;
     protected HttpSession session;
     protected Person person;
+
+    public BaseServlet(boolean isLoginRequired) {
+        this.isLoginRequired = isLoginRequired;
+    }
 
     @Override
     public void init() throws ServletException {
@@ -31,13 +37,47 @@ public class BaseServlet extends HttpServlet {
         taskDao = new TaskDao(db);
     }
 
-    protected boolean initialize(HttpServletRequest request, HttpServletResponse response, boolean requiresLogin) throws IOException {
+    protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        // Sub-class should override this method to handle GET requests
+    }
+
+    protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        // Sub-class should override this method to handle POST requests
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!initialize(request, response)) {
+            return;
+        }
+
+        try {
+            processGet(request, response);
+        } catch (SQLException e) {
+            error(e);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!initialize(request, response)) {
+            return;
+        }
+
+        try {
+            processPost(request, response);
+        } catch (SQLException e) {
+            error(e);
+        }
+    }
+
+    protected boolean initialize(HttpServletRequest request, HttpServletResponse response) throws IOException {
         set(request, response);
         setContentType();
         this.session = request.getSession();
         this.person = getLoggedInPerson();
 
-        if (requiresLogin) {
+        if (isLoginRequired) {
             return requireLogin();
         }
 
@@ -65,6 +105,7 @@ public class BaseServlet extends HttpServlet {
         if (person != null) {
             setAttribute("person", person);
         }
+
         RequestDispatcher dispatcher = request.getRequestDispatcher(path);
         dispatcher.forward(request, response);
     }
