@@ -22,9 +22,11 @@ public class DeleteTask extends BaseServlet {
             return;
         }
 
+        int project = task.getProject();
+
         taskDao.delete(task.getId());
 
-        redirect(task.getProject());
+        redirect(project);
     }
 
     private Task getTask() throws SQLException {
@@ -32,8 +34,8 @@ public class DeleteTask extends BaseServlet {
         return taskDao.find(taskId);
     }
 
-    private void redirect(int projectId) throws IOException {
-        redirect("project?id=" + projectId);
+    private void redirect(int project) throws IOException {
+        redirect("project?id=" + project);
     }
 
     private void printError(HttpServletResponse response, String msg) throws IOException {

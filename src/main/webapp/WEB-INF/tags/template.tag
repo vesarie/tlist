@@ -1,6 +1,7 @@
 <%@tag description="Page template" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@attribute name="page" required="true"%>
 <%@attribute name="pageTitle" required="true"%>
 <%@attribute name="projects" type="java.util.List" required="true"%>
 <t:base pageTitle="${pageTitle}">
@@ -36,6 +37,8 @@
             </div>
         </div>
     </nav>
+    
+    <c:set var="marker"><span class="sr-only">(current)</span></c:set>
 
     <div class="container-fluid">
         <div class="row">
@@ -44,17 +47,31 @@
                     <li><a href="#">Today</a></li>
                     <li><a href="#">Next 7 days</a></li>
                 </ul>
+                
                 <ul class="nav nav-sidebar">
                     <c:forEach var="p" items="${projects}">
                         <c:choose>
-                            <c:when test="${p.id == project.id}">
-                                <li class="active"><a href="project?id=${p.id}">${p.name} <span class="sr-only">(current)</span></a></li>
-                                </c:when>
-                                <c:otherwise>
-                                <li><a href="project?id=${p.id}">${p.name}</a></li>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
+                            <c:when test="${page == 'project' && p.id == project.id}">
+                                <li class="active">
+                                    <a href="project?id=${p.id}"><c:out value="${p.name}"/> ${marker}</a>
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                                <li>
+                                    <a href="project?id=${p.id}"><c:out value="${p.name}"/></a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+
+                    <c:choose>
+                        <c:when test="${page == 'projects'}">
+                            <li class="active"><a href="projects">Edit projects ${marker}</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="projects">Edit projects</a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
                 <!--
                 <ul class="nav nav-sidebar">

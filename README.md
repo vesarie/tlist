@@ -5,10 +5,12 @@ Yleisiä linkkejä:
 * [Sovelluksen kotisivu Herokun palvelimella](http://tlist.herokuapp.com) (**test&#64;user.com, pwd**)
 * [Työn dokumentaatio](doc/dokumentaatio.pdf)
 
-Tällä hetkellä sovellus näyttää käyttäjän projektit, ja projekteihin kuuluvia tehtäviä voi muokata.
+Sovellus näyttää käyttäjän projektit, ja niihin kuuluvat tehtävät. Käyttäjä voi muokata vapaasti hänelle kuuluvia tehtäviä ja projekteja.
 
 * Tehtäville on toteutettu **CRUD**-nelikko.
-* Tehtävien lisäys- ja muokkaus-lomakkeet validoidaan. Tyhjä päivämäärä kuitenkin sallitaan tarkoituksella.
+* Projekteille on toteutettu **CRUD**-nelikko.
+* Tehtävien lisäys- ja muokkaus-lomake validoidaan. Tyhjä päivämäärä kuitenkin sallitaan tarkoituksella.
+* Projektien lisäys- ja muokkaus-lomake validoidaan.
 * Käyttäjä voi kirjautua sisään ja ulos. Sivuja ei näytetä ellei käyttäjä ole kirjautunut.
 
 Aikaisempia virstanpylväitä:

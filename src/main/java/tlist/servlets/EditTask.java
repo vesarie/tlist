@@ -34,7 +34,7 @@ public class EditTask extends BaseServlet {
     }
 
     private void save(Task task) throws SQLException {
-        taskDao.update(task);
+        taskDao.save(task);
         setAttribute("saved", true);
     }
 

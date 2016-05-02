@@ -1,12 +1,12 @@
 package tlist.models;
 
-public class Project {
+public class Label {
 
     private final int id;
     private final int person;
     private String name;
 
-    public Project(int id, int person, String name) {
+    public Label(int id, int person, String name) {
         this.id = id;
         this.person = person;
         this.name = name;

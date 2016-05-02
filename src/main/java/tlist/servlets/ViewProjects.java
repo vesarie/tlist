@@ -2,23 +2,28 @@ package tlist.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import tlist.models.*;
 
-public class ListData extends BaseServlet {
+public class ViewProjects extends BaseServlet {
 
-    public ListData() {
-        super(false);
+    public ViewProjects() {
+        super(true);
     }
 
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-        setAttribute("persons", personDao.findAll());
-        setAttribute("projects", projectDao.findAll());
-        setAttribute("tasks", taskDao.findAll());
+        List<Project> projects = projectDao.forPerson(person.getId());
+        if (projects.isEmpty()) {
+            // todo
+        }
 
-        show("listData.jsp");
+        setAttribute("projects", projects);
+
+        show("projects.jsp");
     }
 
 }

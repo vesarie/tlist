@@ -28,6 +28,22 @@
         <servlet-name>logout</servlet-name>
         <servlet-class>tlist.servlets.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>createProject</servlet-name>
+        <servlet-class>tlist.servlets.CreateProject</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>editProject</servlet-name>
+        <servlet-class>tlist.servlets.EditProject</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteProject</servlet-name>
+        <servlet-class>tlist.servlets.DeleteProject</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>projects</servlet-name>
+        <servlet-class>tlist.servlets.ViewProjects</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>listData</servlet-name>
         <url-pattern>/listData</url-pattern>
@@ -59,6 +75,22 @@
     <servlet-mapping>
         <servlet-name>logout</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>createProject</servlet-name>
+        <url-pattern>/createProject</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editProject</servlet-name>
+        <url-pattern>/editProject</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteProject</servlet-name>
+        <url-pattern>/deleteProject</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>projects</servlet-name>
+        <url-pattern>/projects</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

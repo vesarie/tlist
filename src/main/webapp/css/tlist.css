@@ -116,15 +116,15 @@ body {
   padding: 10px;
 }*/
 
-.task, .task-first {
+.task {
     padding-bottom: 5px;
     border-bottom: 1px solid #eee;
 }
 
-/*.task-first {
-  padding-top: 5px;
-  border-top: 1px solid #eee;
-}*/
+.project {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
 
 h4, h3 {
     font-weight: normal;

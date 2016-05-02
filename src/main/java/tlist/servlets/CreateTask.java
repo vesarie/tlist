@@ -38,7 +38,7 @@ public class CreateTask extends BaseServlet {
     }
 
     private void create(Project project, String name, Priority priority, Date schedule) throws SQLException {
-        taskDao.insert(project.getId(), name, priority, schedule);
+        taskDao.create(project.getId(), name, priority, schedule);
         setAttribute("saved", true);
     }
 
