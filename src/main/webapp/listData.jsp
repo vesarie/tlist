@@ -59,7 +59,6 @@
                 <td><c:out value="${project.id}"/></td>
                 <td><c:out value="${project.person}"/></td>
                 <td><c:out value="${project.name}"/></td>
-                <td><c:out value="${project.color}"/></td>
             </tr>
             </c:forEach>
         </tbody>
