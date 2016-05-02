@@ -14,16 +14,11 @@ public class ProjectDao implements Dao<Project> {
 
     @Override
     public Project find(int id) throws SQLException {
-        List<Project> list = query.queryList("SELECT * FROM Project WHERE id = ? ORDER BY id", id);
-        if (list.isEmpty()) {
-            return null;
-        }
-
-        return list.get(0);
+        return query.queryObject("SELECT * FROM Project WHERE id = ?", id);
     }
 
     @Override
-    public List<Project> find() throws SQLException {
+    public List<Project> findAll() throws SQLException {
         return query.queryList("SELECT * FROM Project ORDER BY id");
     }
 
@@ -32,7 +27,28 @@ public class ProjectDao implements Dao<Project> {
                 + "SELECT Project.* FROM Project "
                 + "JOIN Person ON Person.id = Project.person "
                 + "WHERE Person.id = ? "
-                + "ORDER BY id", personId);
+                + "ORDER BY Project.id", personId);
+    }
+
+    public int save(Project project) throws SQLException {
+        return query.update(""
+                + "UPDATE Project "
+                + "SET name = ? "
+                + "WHERE id = ?",
+                project.getName(), project.getId());
+    }
+
+    public int create(int personId, String name) throws SQLException {
+        return query.insert(""
+                + "INSERT INTO Project "
+                + "(person, name) "
+                + "VALUES (?, ?)",
+                personId, name);
+    }
+
+    @Override
+    public int delete(int id) throws SQLException {
+        return query.update("DELETE FROM Project WHERE id = ?", id);
     }
 
 }

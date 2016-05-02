@@ -14,12 +14,7 @@ public class PersonDao implements Dao<Person> {
 
     @Override
     public Person find(int id) throws SQLException {
-        List<Person> list = query.queryList("SELECT * FROM Person WHERE id = ?", id);
-        if (list.isEmpty()) {
-            return null;
-        }
-
-        return list.get(0);
+        return query.queryObject("SELECT * FROM Person WHERE id = ?", id);
     }
 
     public Person find(String email, String password) throws SQLException {
@@ -34,19 +29,19 @@ public class PersonDao implements Dao<Person> {
             return null;
         }
 
-        List<Person> list = query.queryList(
-                "SELECT * FROM Person WHERE email = ? AND password = ?", email, password);
-        
-        if (list.isEmpty()) {
-            return null;
-        }
-
-        return list.get(0);
+        return query.queryObject(""
+                + "SELECT * FROM Person WHERE email = ? AND password = ?",
+                email, password);
     }
 
     @Override
-    public List<Person> find() throws SQLException {
-        return query.queryList("SELECT * FROM Person");
+    public List<Person> findAll() throws SQLException {
+        return query.queryList("SELECT * FROM Person ORDER BY id");
+    }
+
+    @Override
+    public int delete(int id) throws SQLException {
+        return query.update("DELETE FROM Person WHERE id = ?", id);
     }
 
 }

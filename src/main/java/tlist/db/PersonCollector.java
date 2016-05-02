@@ -8,7 +8,7 @@ public class PersonCollector implements Collector<Person> {
 
     @Override
     public Person collect(ResultSet rs) throws SQLException {
-        Integer id = rs.getInt("id");
+        int id = rs.getInt("id");
         String forename = rs.getString("forename");
         String surname = rs.getString("surname");
         String email = rs.getString("email");

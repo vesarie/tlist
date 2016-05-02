@@ -7,6 +7,8 @@ public interface Dao<T> {
 
     T find(int id) throws SQLException;
 
-    List<T> find() throws SQLException;
+    List<T> findAll() throws SQLException;
+    
+    public int delete(int id) throws SQLException;
 
 }

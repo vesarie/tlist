@@ -31,6 +31,15 @@ public class QueryRunner<T> {
         return rows;
     }
 
+    public T queryObject(String query, Object... params) throws SQLException {
+        List<T> rows = queryList(query, params);
+        if (rows.isEmpty()) {
+            return null;
+        }
+
+        return rows.get(0);
+    }
+
     public int queryInt(String query, Object... params) throws SQLException {
         int result = 0;
         try (Connection connection = db.getConnection();
