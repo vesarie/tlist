@@ -50,7 +50,6 @@
                 <th>id</th>
                 <th>person</th>
                 <th>name</th>
-                <th>color</th>
             </tr>
         </thead>
         <tbody>   
