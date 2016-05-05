@@ -52,16 +52,16 @@ public class ViewProject extends BaseServlet {
         return projects.get(0);
     }
 
-    private boolean showCompletedTasks() {
-        return getParameter("showCompletedTasks") != null;
-    }
-
     private List<Task> getTasks(Project project) throws SQLException {
         if (showCompletedTasks()) {
             return taskDao.forProjectIncludingCompleted(project.getId());
         }
 
         return taskDao.forProject(project.getId());
+    }
+
+    private boolean showCompletedTasks() {
+        return getParameter("showCompletedTasks") != null;
     }
 
 }

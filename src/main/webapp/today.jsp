@@ -6,6 +6,10 @@
 
     <t:ul-task-list tasks="${tasks}"/>
 
+    <div class="pull-right">
+        <t:btn-show-completed show="${showCompletedTasks}" currentPage="today"/>
+    </div>
+
     <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel">
         <t:createEditTask action="editTask"/>
     </div>

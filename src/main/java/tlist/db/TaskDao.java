@@ -59,7 +59,17 @@ public class TaskDao implements Dao<Task> {
                 + "JOIN TaskLabel ON Task.id = TaskLabel.task "
                 + "JOIN Label ON Label.id = TaskLabel.label "
                 + "WHERE Label.id = ? "
+                + "AND Task.completed = false "
                 + "ORDER BY Task.id", labelId));
+    }
+
+    public List<Task> forLabelIncludingCompleted(int labelId) throws SQLException {
+        return fetchLabels(query.queryList(""
+                + "SELECT Task.* FROM Task "
+                + "JOIN TaskLabel ON Task.id = TaskLabel.task "
+                + "JOIN Label ON Label.id = TaskLabel.label "
+                + "WHERE Label.id = ? "
+                + "ORDER BY Task.completed, Task.id", labelId));
     }
 
     public List<Task> forDate(int personId, Date schedule) throws SQLException {
@@ -67,7 +77,21 @@ public class TaskDao implements Dao<Task> {
                 + "SELECT Task.* FROM Task "
                 + "JOIN Project ON Project.id = Task.project "
                 + "JOIN Person ON Person.id = Project.person "
-                + "WHERE Task.schedule = ? AND Person.id = ?",
+                + "WHERE Task.schedule = ? "
+                + "AND Person.id = ? "
+                + "AND Task.completed = false "
+                + "ORDER BY Task.id",
+                schedule, personId));
+    }
+
+    public List<Task> forDateIncludingCompleted(int personId, Date schedule) throws SQLException {
+        return fetchLabels(query.queryList(""
+                + "SELECT Task.* FROM Task "
+                + "JOIN Project ON Project.id = Task.project "
+                + "JOIN Person ON Person.id = Project.person "
+                + "WHERE Task.schedule = ? "
+                + "AND Person.id = ? "
+                + "ORDER BY Task.completed, Task.id",
                 schedule, personId));
     }
 
@@ -77,6 +101,10 @@ public class TaskDao implements Dao<Task> {
                 + "SET name = ?, schedule = ?, priority = ? "
                 + "WHERE id = ?",
                 task.getName(), task.getSchedule(), task.getPriority().toInt(), task.getId());
+    }
+
+    public int setCompleted(int id, boolean completed) throws SQLException {
+        return query.update("UPDATE Task SET completed = ? WHERE id = ?", completed, id);
     }
 
     public int create(int projectId, String name, Priority priority, Date schedule) throws SQLException {
@@ -99,10 +127,6 @@ public class TaskDao implements Dao<Task> {
                 + "SELECT Task.id FROM Task "
                 + "JOIN Project ON Project.id = Task.project "
                 + "WHERE Project.id = ?)", projectId);
-    }
-
-    public int setCompleted(int id, boolean completed) throws SQLException {
-        return query.update("UPDATE Task SET completed = ? WHERE id = ?", completed, id);
     }
 
     private Task fetchLabels(Task task) throws SQLException {
