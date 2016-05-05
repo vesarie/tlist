@@ -1,6 +1,7 @@
 <%@tag description="Task list item (one task)" pageEncoding="UTF-8" trimDirectiveWhitespaces="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@attribute name="tasks" required="true" type="java.util.List"%>
+<%@attribute name="includeForm" required="false" type="java.lang.Boolean"%>
 <ul class="media-list">
     <c:forEach var="task" items="${tasks}">
         <li class="media${task.completed ? ' text-muted' : ''}" id="task${task.id}-li">
@@ -36,7 +37,9 @@
     </c:forEach>
 </ul>
 
-<form action="setCompleted" method="post" id="setComplete">
-    <input type="hidden" id="setComplete-id" name="id" value=""/>
-    <input type="hidden" id="setComplete-value" name="value" value=""/>
-</form>
+<c:if test="${includeForm == null || includeForm}">
+    <form action="setCompleted" method="post" id="setComplete">
+        <input type="hidden" id="setComplete-id" name="id" value=""/>
+        <input type="hidden" id="setComplete-value" name="value" value=""/>
+    </form>
+</c:if>

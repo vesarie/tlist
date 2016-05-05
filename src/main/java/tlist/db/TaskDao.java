@@ -95,6 +95,31 @@ public class TaskDao implements Dao<Task> {
                 schedule, personId));
     }
 
+    public List<Task> forDateInterval(int personId, Date from, Date to) throws SQLException {
+        return fetchLabels(query.queryList(""
+                + "SELECT Task.* FROM Task "
+                + "JOIN Project ON Project.id = Task.project "
+                + "JOIN Person ON Person.id = Project.person "
+                + "WHERE Task.schedule >= ? "
+                + "AND Task.schedule < ? "
+                + "AND Person.id = ? "
+                + "AND Task.completed = false "
+                + "ORDER BY Task.schedule, Task.id",
+                from, to, personId));
+    }
+
+    public List<Task> forDateIntervalIncludingCompleted(int personId, Date from, Date to) throws SQLException {
+        return fetchLabels(query.queryList(""
+                + "SELECT Task.* FROM Task "
+                + "JOIN Project ON Project.id = Task.project "
+                + "JOIN Person ON Person.id = Project.person "
+                + "WHERE Task.schedule >= ? "
+                + "AND Task.schedule < ? "
+                + "AND Person.id = ? "
+                + "ORDER BY Task.schedule, Task.completed, Task.id",
+                from, to, personId));
+    }
+
     public int save(Task task) throws SQLException {
         return query.update(""
                 + "UPDATE Task "

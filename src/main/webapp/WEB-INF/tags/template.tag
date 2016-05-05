@@ -21,11 +21,7 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <!--<li><a href="#">Add task</a></li>-->
-                    <li>
-                        <a href="#">
-                            <span class="glyphicon glyphicon-cog"></span> Settings
-                        </a>
-                    </li>
+                    <!--<li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>-->
                     <li>
                         <form class="navbar-form" name="logoutForm" method="post" action="logout">
                             <button type="submit" class="btn btn-link">
