@@ -9,6 +9,28 @@ $(document).ready(function ($) {
     $('.btn-submit-on-click').on('click', function () {
         $($(this).data('form')).submit();
     });
+
+    // Marking a task as complete or incomplete
+    $('.taskCheckbox').on('change', function () {
+        var taskId = $(this).val();
+        var checked = $(this).prop('checked');
+
+        // Provide visual indication
+        $('#task' + taskId + '-li').toggleClass('text-muted');
+
+        // Make the ajax query
+        var $form = $('#setComplete');
+        $('#setComplete-id').val(taskId);
+        $('#setComplete-value').val(checked);
+        $.ajax({
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            success: function (data, status) {
+                location.reload(true);
+            }
+        });
+    });
 });
 
 // Initializes the "Create task" dialog

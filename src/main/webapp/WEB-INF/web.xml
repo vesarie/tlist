@@ -44,12 +44,20 @@
         <servlet-name>projects</servlet-name>
         <servlet-class>tlist.servlets.ViewProjects</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>today</servlet-name>
+        <servlet-class>tlist.servlets.ViewToday</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>setCompleted</servlet-name>
+        <servlet-class>tlist.servlets.SetCompleted</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>listData</servlet-name>
         <url-pattern>/listData</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>project</servlet-name>
+        <servlet-name>today</servlet-name>
         <url-pattern/>
     </servlet-mapping>
     <servlet-mapping>
@@ -91,6 +99,14 @@
     <servlet-mapping>
         <servlet-name>projects</servlet-name>
         <url-pattern>/projects</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>today</servlet-name>
+        <url-pattern>/today</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>setCompleted</servlet-name>
+        <url-pattern>/setCompleted</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

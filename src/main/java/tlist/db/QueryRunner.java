@@ -52,7 +52,7 @@ public class QueryRunner<T> {
 
         return result;
     }
-    
+
     public int update(String query, Object... params) throws SQLException {
         try (Connection connection = db.getConnection();
              PreparedStatement stmt = prepare(connection, query, params)) {

@@ -118,6 +118,10 @@ public class BaseServlet extends HttpServlet {
         return request.getParameter(name);
     }
 
+    protected String[] getParameterValues(String name) {
+        return request.getParameterValues(name);
+    }
+
     protected void setAttribute(String name, Object o) {
         request.setAttribute(name, o);
     }

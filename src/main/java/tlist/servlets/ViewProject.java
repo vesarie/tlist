@@ -22,17 +22,19 @@ public class ViewProject extends BaseServlet {
         }
 
         Project project = getProject();
+        List<Task> tasks = getTasks(project);
 
         setAttribute("project", project);
         setAttribute("projects", projects);
-        setAttribute("tasks", taskDao.forProject(project.getId()));
+        setAttribute("tasks", tasks);
         setAttribute("priorities", Priority.list);
+        setAttribute("showCompletedTasks", showCompletedTasks());
 
         show("project.jsp");
     }
 
     private Project getProject() throws SQLException {
-        int projectId = ServletUtil.parseInt(getParameter("id"), -1);
+        int projectId = ServletUtil.parseInt(request.getParameter("id"), -1);
 
         if (projectId == -1) {
             return getFirstProject();
@@ -48,6 +50,18 @@ public class ViewProject extends BaseServlet {
         }
 
         return projects.get(0);
+    }
+
+    private boolean showCompletedTasks() {
+        return getParameter("showCompletedTasks") != null;
+    }
+
+    private List<Task> getTasks(Project project) throws SQLException {
+        if (showCompletedTasks()) {
+            return taskDao.forProjectIncludingCompleted(project.getId());
+        }
+
+        return taskDao.forProject(project.getId());
     }
 
 }

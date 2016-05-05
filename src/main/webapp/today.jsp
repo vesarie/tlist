@@ -4,7 +4,7 @@
 <t:template page="today" pageTitle="Today" projects="${projects}">
     <h2 class="page-header">Today</h2>
 
-    <t:taskList tasks="${tasks}"/>
+    <t:ul-task-list tasks="${tasks}"/>
 
     <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel">
         <t:createEditTask action="editTask"/>

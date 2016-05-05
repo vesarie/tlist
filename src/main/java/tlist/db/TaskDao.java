@@ -2,6 +2,7 @@ package tlist.db;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 import tlist.models.Label;
 import tlist.models.Priority;
@@ -40,7 +41,16 @@ public class TaskDao implements Dao<Task> {
                 + "SELECT Task.* FROM Task "
                 + "JOIN Project ON Project.id = Task.project "
                 + "WHERE Project.id = ? "
+                + "AND Task.completed = false "
                 + "ORDER BY Task.id", projectId));
+    }
+
+    public List<Task> forProjectIncludingCompleted(int projectId) throws SQLException {
+        return fetchLabels(query.queryList(""
+                + "SELECT Task.* FROM Task "
+                + "JOIN Project ON Project.id = Task.project "
+                + "WHERE Project.id = ? "
+                + "ORDER BY Task.completed, Task.id", projectId));
     }
 
     public List<Task> forLabel(int labelId) throws SQLException {
@@ -50,6 +60,15 @@ public class TaskDao implements Dao<Task> {
                 + "JOIN Label ON Label.id = TaskLabel.label "
                 + "WHERE Label.id = ? "
                 + "ORDER BY Task.id", labelId));
+    }
+
+    public List<Task> forDate(int personId, Date schedule) throws SQLException {
+        return fetchLabels(query.queryList(""
+                + "SELECT Task.* FROM Task "
+                + "JOIN Project ON Project.id = Task.project "
+                + "JOIN Person ON Person.id = Project.person "
+                + "WHERE Task.schedule = ? AND Person.id = ?",
+                schedule, personId));
     }
 
     public int save(Task task) throws SQLException {
@@ -80,6 +99,10 @@ public class TaskDao implements Dao<Task> {
                 + "SELECT Task.id FROM Task "
                 + "JOIN Project ON Project.id = Task.project "
                 + "WHERE Project.id = ?)", projectId);
+    }
+
+    public int setCompleted(int id, boolean completed) throws SQLException {
+        return query.update("UPDATE Task SET completed = ? WHERE id = ?", completed, id);
     }
 
     private Task fetchLabels(Task task) throws SQLException {

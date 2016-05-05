@@ -4,30 +4,16 @@
 <t:template page="project" pageTitle="${project.name}" projects="${projects}">
     <h2 class="page-header">${project.name}</h2>
 
-    <ul class="media-list">
-        <c:forEach var="task" items="${tasks}">
-            <li class="media">
-                <div class="media-left">
-                    <input type="checkbox" aria-label=""/>
-                </div>
+    <c:set var="currentPage" value="project?id=${project.id}"/>
 
-                <div class="media-body task">
-                    <h4 class="media-heading" id="task${task.id}-name"><c:out value="${task.name}"/></h4>
-                </div>
-
-                <div class="media-right">
-                    <button type="button" class="btn btn-default btn-sm"
-                            data-toggle="modal" data-target="#editTaskModal"
-                            data-task-id="${task.id}"
-                            data-task-priority="${task.priority.integer}"
-                            data-task-schedule="${task.schedule}">Edit</button>
-                </div>
-            </li>
-        </c:forEach>
-    </ul>
+    <t:ul-task-list tasks="${tasks}"/>
 
     <button type="button" class="btn btn-default"
             data-toggle="modal" data-target="#createTaskModal">Create a task</button>
+
+    <div class="pull-right">
+        <t:btn-show-completed show="${showCompletedTasks}" currentPage="project?id=${project.id}"/>
+    </div>
 
     <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel">
         <t:createEditTask action="editTask"/>
