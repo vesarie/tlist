@@ -16,7 +16,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">tList</a>
+                <a class="navbar-brand" href=".">tList</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -37,41 +37,26 @@
             </div>
         </div>
     </nav>
-    
-    <c:set var="marker"><span class="sr-only">(current)</span></c:set>
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li><a href="#">Today</a></li>
-                    <li><a href="#">Next 7 days</a></li>
+                    <t:li-sidebar-link isActive="${page == 'today'}" href="today">Today</t:li-sidebar-link>
+                    <t:li-sidebar-link isActive="${page == 'next7'}" href="next7">Next 7 days</t:li-sidebar-link>
                 </ul>
-                
+
                 <ul class="nav nav-sidebar">
                     <c:forEach var="p" items="${projects}">
-                        <c:choose>
-                            <c:when test="${page == 'project' && p.id == project.id}">
-                                <li class="active">
-                                    <a href="project?id=${p.id}"><c:out value="${p.name}"/> ${marker}</a>
-                                </li>
-                            </c:when>
-                            <c:otherwise>
-                                <li>
-                                    <a href="project?id=${p.id}"><c:out value="${p.name}"/></a>
-                                </li>
-                            </c:otherwise>
-                        </c:choose>
+                        <t:li-sidebar-link isActive="${page == 'project' && p.id == project.id}" 
+                                     href="project?id=${p.id}">
+                            <c:out value="${p.name}"/>
+                        </t:li-sidebar-link>
                     </c:forEach>
 
-                    <c:choose>
-                        <c:when test="${page == 'projects'}">
-                            <li class="active"><a href="projects">Edit projects ${marker}</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li><a href="projects">Edit projects</a></li>
-                        </c:otherwise>
-                    </c:choose>
+                    <t:li-sidebar-link isActive="${page == 'projects'}" href="projects">
+                        <small>Edit projects</small>
+                    </t:li-sidebar-link>
                 </ul>
                 <!--
                 <ul class="nav nav-sidebar">

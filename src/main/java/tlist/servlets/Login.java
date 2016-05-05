@@ -16,7 +16,7 @@ public class Login extends BaseServlet {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         if (person != null) {
-            redirect("project");
+            redirect(".");
             return;
         }
 
@@ -30,7 +30,7 @@ public class Login extends BaseServlet {
         Person p = login(email, password);
 
         if (p != null) {
-            redirect("project");
+            redirect(".");
             return;
         }
 
