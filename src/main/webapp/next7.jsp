@@ -7,16 +7,14 @@
 
     <c:set var="padding"><div style="height: 30px"></div></c:set>
 
-    <c:forEach var="i" begin="0" end="${fn:length(tasksByDate) - 1}">
-        <c:set var="item" value="${tasksByDate[i]}"/>
-
+    <c:forEach var="item" items="${tasksByDate}" varStatus="loop">
         <h3 class="page-header">
             ${item.header} <small> ${item.subHeader}</small>
         </h3>
 
-        <t:ul-task-list tasks="${item.tasks}" includeForm="${i == 0}"/>
+        <t:ul-task-list tasks="${item.tasks}" includeForm="${loop.last}"/>
 
-        <c:if test="${i < fn:length(tasksByDate) - 1}">${padding}</c:if>
+        <c:if test="${!loop.last}">${padding}</c:if>
     </c:forEach>
 
     <div class="pull-right">
