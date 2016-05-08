@@ -2,12 +2,12 @@ package tlist.models;
 
 public enum Priority {
 
-    Level1(1), Level2(2), Level3(3), Level4(4);
+    p1(1), p2(2), p3(3), p4(4);
 
     public static final int[] list = new int[]{1, 2, 3, 4};
-    public static final Priority defaultPriority = Level4;
+    public static final Priority defaultPriority = p4;
 
-    int value;
+    final int value;
 
     private Priority(int value) {
         this.value = value;
@@ -23,10 +23,10 @@ public enum Priority {
 
     public static Priority convert(int priority) {
         switch (priority) {
-            case 1: return Level1;
-            case 2: return Level2;
-            case 3: return Level3;
-            case 4: return Level4;
+            case 1: return p1;
+            case 2: return p2;
+            case 3: return p3;
+            case 4: return p4;
         }
 
         return defaultPriority;

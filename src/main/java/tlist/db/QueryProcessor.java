@@ -5,22 +5,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class JoinRunner {
+public class QueryProcessor {
 
     private final Database db;
-    private final Joiner joiner;
+    private final Processor processor;
 
-    public JoinRunner(Database db, Joiner joiner) {
+    public QueryProcessor(Database db, Processor processor) {
         this.db = db;
-        this.joiner = joiner;
+        this.processor = processor;
     }
 
-    public void joinBasedOn(String query, Object... params) throws SQLException {
+    public void process(String query, Object... params) throws SQLException {
         try (Connection connection = db.getConnection();
              PreparedStatement stmt = prepare(connection, query, params);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                joiner.join(rs);
+                processor.process(rs);
             }
         }
     }

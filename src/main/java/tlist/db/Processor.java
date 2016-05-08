@@ -3,8 +3,8 @@ package tlist.db;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public interface Joiner<U, V> {
+public interface Processor {
 
-    void join(ResultSet rs) throws SQLException;
+    void process(ResultSet rs) throws SQLException;
 
 }

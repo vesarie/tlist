@@ -13,26 +13,17 @@ create table Project (
     foreign key (person) references Person(id)
 );
 
-create table Label (
-    id serial primary key,
-    person integer not null,
-    name varchar(100) not null,
-    foreign key (person) references Person(id)
-);
-
 create table Task (
     id serial primary key,
-    project integer not null,
     name varchar(250) not null,
     priority integer not null default 4,
     schedule date,
-    completed boolean not null,
-    foreign key (project) references Project(id)
+    completed boolean not null
 );
 
-create table TaskLabel (
+create table ProjectTask (
+    project integer not null,
     task integer not null,
-    label integer not null,
-    foreign key (task) references Task(id),
-    foreign key (label) references Label(id)
+    foreign key (project) references Project(id),
+    foreign key (task) references Task(id)
 );
