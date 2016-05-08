@@ -22,19 +22,13 @@ public class DeleteProject extends BaseServlet {
             return;
         }
 
-        taskDao.deleteAllInProject(project.getId());
+        taskDao.deleteAllOnlyInGivenProject(project.getId());
         projectDao.delete(project.getId());
-
-        redirect();
     }
 
     private Project getProject() throws SQLException {
         int projectId = ServletUtil.parseInt(getParameter("id"), -1);
         return projectDao.find(projectId);
-    }
-
-    private void redirect() throws IOException {
-        redirect("projects");
     }
 
     private void printError(HttpServletResponse response, String msg) throws IOException {

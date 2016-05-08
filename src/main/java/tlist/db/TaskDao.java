@@ -117,7 +117,13 @@ public class TaskDao implements Dao<Task> {
                 from, to, personId);
     }
 
+    public int setCompleted(int id, boolean completed) throws SQLException {
+        return query.update("UPDATE Task SET completed = ? WHERE id = ?", completed, id);
+    }
+
     public int save(Task task) throws SQLException {
+        deleteAssociations(task.getId());
+        createAssociations(task.getId(), task.getProjects());
         return query.update(""
                 + "UPDATE Task "
                 + "SET name = ?, schedule = ?, priority = ? "
@@ -125,51 +131,39 @@ public class TaskDao implements Dao<Task> {
                 task.getName(), task.getSchedule(), task.getPriority().toInt(), task.getId());
     }
 
-    public int setCompleted(int id, boolean completed) throws SQLException {
-        return query.update("UPDATE Task SET completed = ? WHERE id = ?", completed, id);
-    }
-
-    public int create(int projectId, String name, Priority priority, Date schedule) throws SQLException {
-        return query.insert(""
+    public int create(List<Integer> projects, String name, Priority priority, Date schedule) throws SQLException {
+        if (projects == null || projects.isEmpty()) return -1;
+        int task = query.insert(""
                 + "INSERT INTO Task "
-                + "(project, name, priority, schedule, completed) "
-                + "VALUES (?, ?, ?, ?, ?)",
-                projectId, name, priority.toInt(), schedule, false);
+                + "(name, priority, schedule, completed) VALUES (?, ?, ?, ?)",
+                name, priority.toInt(), schedule, false);
+        createAssociations(task, projects);
+        return task;
     }
 
     @Override
     public int delete(int id) throws SQLException {
+        deleteAssociations(id);
         return query.update("DELETE FROM Task WHERE id = ?", id);
     }
 
-    public int deleteAllInProject(int projectId) throws SQLException {
+    public int deleteAllOnlyInGivenProject(int projectId) throws SQLException {
+        query.update("DELETE FROM ProjectTask WHERE project = ?", projectId);
         return query.update(""
-                + "DELETE FROM Task "
-                + "WHERE id IN ("
+                + "DELETE FROM Task WHERE id IN ("
                 + "SELECT Task.id FROM Task "
-                + "JOIN Project ON Project.id = Task.project "
-                + "WHERE Project.id = ?)", projectId);
+                + "LEFT JOIN ProjectTask ON Task.id = ProjectTask.task "
+                + "WHERE ProjectTask.task IS NULL)");
     }
 
-//    private void fetchProjectsForTask(int taskId) throws SQLException {
-//        mapper.reset();
-//        map.process(""
-//                + "SELECT * FROM ProjectTask "
-//                + "WHERE task = ? "
-//                + "ORDER BY task, project",
-//                taskId);
-//        collector.setProjects(mapper.getProjects());
-//    }
-//
-//    private void fetchProjectsForPerson(int personId) throws SQLException {
-//        mapper.reset();
-//        map.process(""
-//                + "SELECT ProjectTask.* FROM ProjectTask "
-//                + "JOIN Project ON Project.id = ProjectTask.project "
-//                + "JOIN Person ON Person.id = Project.person "
-//                + "WHERE Person.id = ? "
-//                + "ORDER BY ProjectTask.task, ProjectTask.project",
-//                personId);
-//        collector.setProjects(mapper.getProjects());
-//    }
+    private void createAssociations(int task, List<Integer> projects) throws SQLException {
+        for (int project : projects) {
+            query.insert("INSERT INTO ProjectTask (project, task) VALUES (?, ?)", project, task);
+        }
+    }
+
+    private void deleteAssociations(int task) throws SQLException {
+        query.update("DELETE FROM ProjectTask WHERE task = ?", task);
+    }
+
 }

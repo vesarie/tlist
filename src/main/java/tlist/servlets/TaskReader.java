@@ -1,6 +1,8 @@
 package tlist.servlets;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import tlist.models.Priority;
 import tlist.models.Task;
@@ -16,6 +18,7 @@ public class TaskReader extends FormReader<Task> {
         task.setName(getName());
         task.setSchedule(getSchedule());
         task.setPriority(getPriority());
+        task.setProjects(getProjects());
     }
 
     public String getName() {
@@ -49,6 +52,23 @@ public class TaskReader extends FormReader<Task> {
         }
 
         return Priority.convert(priority);
+    }
+
+    public List<Integer> getProjects() {
+        List<Integer> projects = new ArrayList<>();
+        for (String projectId : request.getParameterValues("projects")) {
+            int id = ServletUtil.parseInt(projectId, -1);
+
+            if (id != -1) {
+                projects.add(id);
+            }
+        }
+
+        if (projects.isEmpty()) {
+            setErrorMsg("projects", "Project not selected");
+        }
+
+        return projects;
     }
 
 }

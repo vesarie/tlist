@@ -2,6 +2,8 @@ package tlist.db;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import tlist.models.Project;
 
 public class ProjectDao implements Dao<Project> {
@@ -28,6 +30,15 @@ public class ProjectDao implements Dao<Project> {
                 + "JOIN Person ON Person.id = Project.person "
                 + "WHERE Person.id = ? "
                 + "ORDER BY Project.id", personId);
+    }
+
+    public Map<Integer, Project> map(List<Project> projects) throws SQLException {
+        Map<Integer, Project> map = new TreeMap<>();
+        for (Project project : projects) {
+            map.put(project.getId(), project);
+        }
+
+        return map;
     }
 
     public int save(Project project) throws SQLException {

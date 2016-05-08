@@ -4,14 +4,12 @@
 <t:template page="today" pageTitle="Today" projects="${projects}">
     <h2 class="page-header">Today</h2>
 
-    <t:ul-task-list tasks="${tasks}"/>
+    <t:ul-task-list tasks="${tasks}" projectMap="${projectMap}"/>
 
     <div class="pull-right">
         <t:btn-show-completed show="${showCompletedTasks}" currentPage="today"/>
     </div>
 
-    <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel">
-        <t:createEditTask action="editTask"/>
-    </div>
+    <t:modal-edit-task/>
 
 </t:template>

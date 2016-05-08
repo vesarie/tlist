@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ public class ViewToday extends BaseServlet {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         List<Project> projects = projectDao.forPerson(person.getId());
+        Map<Integer, Project> projectMap = projectDao.map(projects);
         if (projects.isEmpty()) {
             // todo
         }
@@ -28,6 +30,7 @@ public class ViewToday extends BaseServlet {
         List<Task> tasks = getTasks(today);
 
         setAttribute("projects", projects);
+        setAttribute("projectMap", projectMap);
         setAttribute("tasks", tasks);
         setAttribute("priorities", Priority.list);
         setAttribute("showCompletedTasks", showCompletedTasks());

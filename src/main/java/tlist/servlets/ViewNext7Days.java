@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,6 +59,7 @@ public class ViewNext7Days extends BaseServlet {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         List<Project> projects = projectDao.forPerson(person.getId());
+        Map<Integer, Project> projectMap = projectDao.map(projects);
         if (projects.isEmpty()) {
             // todo
         }
@@ -69,6 +71,7 @@ public class ViewNext7Days extends BaseServlet {
         List<TasksForDate> tasksByDate = listByDate(tasks);
 
         setAttribute("projects", projects);
+        setAttribute("projectMap", projectMap);
         setAttribute("tasksByDate", tasksByDate);
         setAttribute("priorities", Priority.list);
         setAttribute("showCompletedTasks", showCompletedTasks());

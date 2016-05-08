@@ -1,7 +1,7 @@
 <%@tag description="Create/edit task form" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@attribute name="action" required="true"%>
-<%@attribute name="project" required="false" type="tlist.models.Project"%>
+<%@attribute name="isSelected" required="false" type="java.util.Map"%>
 <div class="modal-dialog" role="document">
     <div class="modal-content">
         <!-- The AJAX part is in js/tlist.js -->
@@ -9,7 +9,6 @@
               data-async data-target="#${action}Modal"
               data-saved="${saved == null ? 'false' : saved}">
             <input type="hidden" name="id" id="${action}-id" value="${id == null ? '' : id}"/>
-            <input type="hidden" name="project" value="${project == null ? '' : project.id}"/>
 
             <c:set var="title" value="${action == 'editTask' ? 'Edit task' : 'Create task'}"/>
 
@@ -48,18 +47,35 @@
                         </c:if>
 
                         <c:forEach var="p" items="${priorities}">
-                            <c:choose>
-                                <c:when test="${priority == p}">
-                                    <option value="${p}" id="${action}-priority-${p}" selected>${p}</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="${p}" id="${action}-priority-${p}">${p}</option>
-                                </c:otherwise>
-                            </c:choose>
+                            <c:set var="selected"></c:set>
+
+                            <c:if test="${priority == p}">
+                                <c:set var="selected">selected</c:set>
+                            </c:if>
+
+                            <option value="${p}" id="${action}-priority-${p}" ${selected}>${p}</option>
                         </c:forEach>
                     </select>
                     <span id="${action}-priority-msg" class="help-block">
                         <c:out value="${priorityErrorMsg}" default=""/>
+                    </span>
+                </div>
+
+                <div class="form-group ${projectsErrorMsg == null ? '' : 'has-error'}">
+                    <label for="${action}-projects" class="control-label">Projects:</label>
+                    <select multiple class="form-control" name="projects" id="${action}-projects" aria-describedby="${action}-projects-msg">
+                        <c:forEach var="p" items="${projects}">
+                            <c:set var="selected"></c:set>
+
+                            <c:if test="${isSelected != null && isSelected[p.id]}">
+                                <c:set var="selected">selected</c:set>
+                            </c:if>
+
+                            <option value="${p.id}" ${selected}>${p.name}</option>
+                        </c:forEach>
+                    </select>
+                    <span id="${action}-projects-msg" class="help-block">
+                        <c:out value="${projectsErrorMsg}" default=""/>
                     </span>
                 </div>
             </div>

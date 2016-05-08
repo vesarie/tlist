@@ -12,7 +12,7 @@
             ${item.header} <small> ${item.subHeader}</small>
         </h3>
 
-        <t:ul-task-list tasks="${item.tasks}" includeForm="${loop.last}"/>
+        <t:ul-task-list tasks="${item.tasks}" projectMap="${projectMap}" includeForm="${loop.last}"/>
 
         <c:if test="${!loop.last}">${padding}</c:if>
     </c:forEach>
@@ -21,8 +21,6 @@
         <t:btn-show-completed show="${showCompletedTasks}" currentPage="next7"/>
     </div>
 
-    <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel">
-        <t:createEditTask action="editTask"/>
-    </div>
+    <t:modal-edit-task/>
 
 </t:template>

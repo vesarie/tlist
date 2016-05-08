@@ -6,7 +6,7 @@
 
     <c:set var="currentPage" value="project?id=${project.id}"/>
 
-    <t:ul-task-list tasks="${tasks}"/>
+    <t:ul-task-list tasks="${tasks}" projectMap="${projectMap}"/>
 
     <button type="button" class="btn btn-default"
             data-toggle="modal" data-target="#createTaskModal">Create a task</button>
@@ -15,12 +15,7 @@
         <t:btn-show-completed show="${showCompletedTasks}" currentPage="project?id=${project.id}"/>
     </div>
 
-    <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel">
-        <t:createEditTask action="editTask"/>
-    </div>
-
-    <div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-labelledby="createTaskModalLabel">
-        <t:createEditTask action="createTask" project="${project}"/>
-    </div>
+    <t:modal-edit-task/>
+    <t:modal-create-task project="${project}"/>
 
 </t:template>

@@ -3,6 +3,8 @@ package tlist.servlets;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,38 +18,35 @@ public class CreateTask extends BaseServlet {
 
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-        Project project = getProject();
-
         TaskReader reader = new TaskReader(request);
 
         String name = reader.getName();
         Date schedule = reader.getSchedule();
         Priority priority = reader.getPriority();
+        List<Integer> projects = reader.getProjects();
 
         if (reader.getErrorCount() == 0) {
-            create(project, name, priority, schedule);
+            create(projects, name, priority, schedule);
         }
 
-        setAttributes(project, priority);
+        setAttributes(projects, priority);
         show("createTask.jsp");
     }
 
-    private Project getProject() throws SQLException {
-        int projectId = ServletUtil.parseInt(getParameter("project"), -1);
-        return projectDao.find(projectId);
-    }
-
-    private void create(Project project, String name, Priority priority, Date schedule) throws SQLException {
-        taskDao.create(project.getId(), name, priority, schedule);
+    private void create(List<Integer> projects, String name, Priority priority, Date schedule) throws SQLException {
+        taskDao.create(projects, name, priority, schedule);
         setAttribute("saved", true);
     }
 
-    private void setAttributes(Project project, Priority priority) {
-        setAttribute("project", project);
+    private void setAttributes(List<Integer> selectedList, Priority priority) throws SQLException {
+        List<Project> projects = projectDao.forPerson(person.getId());
+        Map<Integer, Boolean> isSelected = EditTask.mapSelectedProjects(projects, selectedList);
         setAttribute("name", getParameter("name"));
         setAttribute("schedule", getParameter("schedule"));
         setAttribute("priority", priority.toInt());
         setAttribute("priorities", Priority.list);
+        setAttribute("projects", projects);
+        setAttribute("isSelected", isSelected);
     }
 
 }

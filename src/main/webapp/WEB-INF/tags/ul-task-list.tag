@@ -1,6 +1,7 @@
 <%@tag description="Task list item (one task)" pageEncoding="UTF-8" trimDirectiveWhitespaces="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@attribute name="tasks" required="true" type="java.util.List"%>
+<%@attribute name="projectMap" required="true" type="java.util.Map"%>
 <%@attribute name="includeForm" required="false" type="java.lang.Boolean"%>
 <ul class="media-list">
     <c:forEach var="task" items="${tasks}">
@@ -18,6 +19,11 @@
                 </c:otherwise>
             </c:choose>
 
+            <c:set var="pList" value=""/>
+            <c:forEach var="projectId" items="${task.projects}">
+                <c:set var="pList">${pList} <c:out value="${projectMap[projectId].name}"/></c:set>
+            </c:forEach>
+
             <div class="media-left">
                 <input type="checkbox" class="taskCheckbox" name="completedTasks" value="${task.id}" aria-label="" ${checked}/>
             </div>
@@ -31,7 +37,8 @@
                         data-toggle="modal" data-target="#editTaskModal"
                         data-task-id="${task.id}"
                         data-task-priority="${task.priority.integer}"
-                        data-task-schedule="${task.schedule}">Edit</button>
+                        data-task-schedule="${task.schedule}"
+                        data-task-projects="${task.projects}">Edit</button>
             </div>
         </li>
     </c:forEach>

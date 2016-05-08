@@ -6,8 +6,17 @@ $.datepicker.setDefaults({
 });
 
 $(document).ready(function ($) {
+    // Delete task/project button
     $('.btn-submit-on-click').on('click', function () {
-        $($(this).data('form')).submit();
+        var $form = $($(this).data('form'));
+        $.ajax({
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            success: function (data, status) {
+                location.reload(true);
+            }
+        });
     });
 
     // Marking a task as complete or incomplete
@@ -38,6 +47,7 @@ $('#createTaskModal').on('show.bs.modal', function (event) {
     $('#createTask-name').val('');
     $('#createTask-schedule').val('');
     $('#createTask-priority').val(4);
+    $('#createTask-projects').val($(this).data('taskProjects'));
 
     $(this).find('div.has-error').removeClass('has-error');
     $(this).find('span.help-block').text('');
@@ -50,6 +60,7 @@ $('#editTaskModal').on('show.bs.modal', function (event) {
     var id = button.data('taskId');
     var priority = button.data('taskPriority');
     var schedule = button.data('taskSchedule');
+    var projects = button.data('taskProjects');
     var name = $('#task' + id + '-name').text();
 
     $('#editTask').data('saved', false);
@@ -58,6 +69,7 @@ $('#editTaskModal').on('show.bs.modal', function (event) {
     $('#editTask-name').val(name);
     $('#editTask-priority').val(priority);
     $('#editTask-schedule').val(schedule);
+    $('#editTask-projects').val(projects);
 
     $(this).find('div.has-error').removeClass('has-error');
     $(this).find('span.help-block').text('');
@@ -95,14 +107,23 @@ $('.modal').on('submit', 'form[data-async]', function (event) {
         type: $form.attr('method'),
         url: $form.attr('action'),
         data: $form.serialize(),
-
         success: function (data, status) {
             $target.html(data);
             $form = $target.find('form[data-async]');
             $form.find('input[data-datepicker]').datepicker();
+
             $('.btn-submit-on-click').on('click', function () {
-                $($(this).data('form')).submit();
+                var $form = $($(this).data('form'));
+                $.ajax({
+                    type: $form.attr('method'),
+                    url: $form.attr('action'),
+                    data: $form.serialize(),
+                    success: function (data, status) {
+                        location.reload(true);
+                    }
+                });
             });
+
             if ($form.data('saved')) {
                 location.reload(true);
             }

@@ -25,5 +25,6 @@ create table ProjectTask (
     project integer not null,
     task integer not null,
     foreign key (project) references Project(id),
-    foreign key (task) references Task(id)
+    foreign key (task) references Task(id),
+    primary key (project, task)
 );
