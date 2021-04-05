@@ -1,4 +1,5 @@
 /target
+/pgdata
 .DS_Store
 
 # LaTeX
