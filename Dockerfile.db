@@ -1,2 +1,8 @@
 FROM postgres:11
+
+# Used to initialize an empty database (in alphabetical order)
+COPY ./sql/create-tables.sql /docker-entrypoint-initdb.d/1-create-tables.sql
+COPY ./sql/add-test-user.sql /docker-entrypoint-initdb.d/2-add-test-user.sql
+
+# For ease of access from the psql shell
 COPY ./sql /sql
