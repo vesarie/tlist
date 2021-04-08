@@ -31,7 +31,7 @@ When the database server starts for the first time, it creates a database for th
 If you wish to access the database, you can open a psql shell with the command
 
 ```shell
-docker-compose run db psql -h db -U postgres
+docker-compose run --rm db psql -h db -U postgres
 ```
 
 The default password is ```secret```. Please recognize that this a local setup, which should never be exposed to the internet. The application expects the data to be in the default database named ```postgres```. You may wish to look at the directory [sql/](sql/) for some examples.
