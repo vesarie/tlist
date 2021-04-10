@@ -1,8 +1,9 @@
 --insert into Person (forename, surname, email, password)
---    values ('Example',  'User',  'user@example.com', 'pwd');
---insert into Project (person, name) values (1, 'Work');
---insert into Project (person, name) values (1, 'School');
---insert into Project (person, name) values (1, 'Personal');
+--    values ('Example',  'User',  'user@example.com', 'pwd')
+--returning *;
+--insert into Project (person, name) values (?, 'Work');
+--insert into Project (person, name) values (?, 'School');
+--insert into Project (person, name) values (?, 'Personal');
 
 -- Insert a few tasks for the Example User
 --
