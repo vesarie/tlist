@@ -1,5 +1,8 @@
 /target
 /pgdata
+/.classpath
+/.project
+/.settings
 .DS_Store
 
 # LaTeX
