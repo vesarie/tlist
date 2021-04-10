@@ -1,4 +1,4 @@
-FROM postgres:11
+FROM postgres:13
 
 # Used to initialize an empty database (in alphabetical order)
 COPY ./sql/create-tables.sql /docker-entrypoint-initdb.d/1-create-tables.sql
