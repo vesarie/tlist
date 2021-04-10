@@ -11,29 +11,29 @@ public class Database {
     BasicDataSource connectionPool;
 
     public Database() throws URISyntaxException, SQLException {
-        URI dbUri = new URI(getDatabaseUrl());
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
-
+        String dbUrl = getJdbcDatabaseUrl();
         connectionPool = new BasicDataSource();
-
-        if (dbUri.getUserInfo() != null) {
-            connectionPool.setUsername(dbUri.getUserInfo().split(":")[0]);
-            connectionPool.setPassword(dbUri.getUserInfo().split(":")[1]);
-        }
 
         connectionPool.setDriverClassName("org.postgresql.Driver");
         connectionPool.setUrl(dbUrl);
         connectionPool.setInitialSize(1);
     }
 
-    private String getDatabaseUrl() {
+    private String getJdbcDatabaseUrl() throws URISyntaxException {
         String dbUrl = System.getenv("DATABASE_URL"); // Heroku
 
-        if (dbUrl == null) {
-            dbUrl = "postgres://localhost/tlist";
+        if (dbUrl != null) {
+            URI dbUri = new URI(dbUrl);
+            String username = dbUri.getUserInfo().split(":")[0];
+            String password = dbUri.getUserInfo().split(":")[1];
+            return "jdbc:postgresql://"
+                + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()
+                + "?user=" + username + "&password=" + password
+                + "&sslmode=require";
         }
 
-        return dbUrl;
+        // For the local dev environment (default)
+        return "jdbc:postgresql://db/postgres?user=postgres&password=secret";
     }
 
     public Connection getConnection() throws SQLException {

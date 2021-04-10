@@ -1,124 +1,75 @@
-insert into Person (forename, surname, email, password) values ('Test',  'User',  'test@user.com', 'pwd');
-insert into Person (forename, surname, email, password) values ('Bill',  'Baker', 'bill.baker@example.com', 'pwd');
-insert into Person (forename, surname, email, password) values ('Chloe', 'Clark', 'chloe.clark@example.com', 'pwd');
-insert into Person (forename, surname, email, password) values ('Diana', 'Davis', 'diana.davis@example.com', 'pwd');
+--insert into Person (forename, surname, email, password)
+--    values ('Example',  'User',  'user@example.com', 'pwd')
+--returning *;
+--insert into Project (person, name) values (?, 'Work');
+--insert into Project (person, name) values (?, 'School');
+--insert into Project (person, name) values (?, 'Personal');
 
-insert into Project (person, name) values (1, 'tsoha');
-insert into Project (person, name) values (1, 'tira');
-insert into Project (person, name) values (1, 'hobbies');
-insert into Project (person, name) values (2, 'work');
-insert into Project (person, name) values (2, 'school');
-insert into Project (person, name) values (2, 'personal');
-insert into Project (person, name) values (2, 'etc');
-insert into Project (person, name) values (3, 'work');
-insert into Project (person, name) values (3, 'school');
-insert into Project (person, name) values (3, 'personal');
-insert into Project (person, name) values (3, 'etc');
+-- Insert a few tasks for the Example User
+--
+-- This script assumes that the db contains
+-- * an user with the email address user@example.com, and
+-- * 3 projects named "Work", "School" and "Personal".
 
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-03', false, 'Write create table commands');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-03', false, 'Create some test data (add-test-data.sql)');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-03', false, 'Boot-up the database');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-04', false, 'Design a layout for the "Today" and "Next 7 days" pages');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-04', false, 'Design a layout for the "Project", "Label" and "Priority" pages');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-05', false, 'Implement one view with JSP');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-05', false, 'Test the first view');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-06', false, 'Implement another view with JSP');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-06', false, 'Test the second view');
-insert into Task (priority, schedule, completed, name) values (1, '2016-05-06', false, 'Demo');
-insert into Task (priority, schedule, completed, name) values (1, '2016-05-08', false, 'Submit final version of the project');
-insert into Task (priority, schedule, completed, name) values (1, '2016-05-06', false, 'Implement the possibility to assign multiple projects for a task');
-insert into Task (priority, schedule, completed, name) values (1, '2016-05-07', false, 'Update documentation');
-insert into Task (priority, schedule, completed, name) values (1, '2016-01-21', false, 'Exercise 1, tira (18.–22.1.)');
-insert into Task (priority, schedule, completed, name) values (1, '2016-01-28', false, 'Exercise 2, tira (25.–29.1.)');
-insert into Task (priority, schedule, completed, name) values (1, '2016-02-04', false, 'Exercise 3, tira (1.–5.2.)');
-insert into Task (priority, schedule, completed, name) values (1, '2016-02-11', false, 'Exercise 4, tira (8.–12.2.)');
-insert into Task (priority, schedule, completed, name) values (1, '2016-02-18', false, 'Exercise 5, tira (15.–19.2.)');
-insert into Task (priority, schedule, completed, name) values (1, '2016-02-25', false, 'Exercise 6, tira (22.–26.2.)');
-insert into Task (priority, schedule, completed, name) values (1, '2016-03-03', false, 'Exercise 7, tira (29.2.–4.3.)');
-insert into Task (priority, schedule, completed, name) values (1, '2016-05-11', false, 'Tira exam');
-insert into Task (priority, schedule, completed, name) values (2, '2016-05-15', false, 'TMC-exercises 2nd bonus week');
-insert into Task (priority, schedule, completed, name) values (4, '2016-05-09', false, 'Revise shortest paths');
-insert into Task (priority, schedule, completed, name) values (4, '2016-05-10', false, 'Revise minimum spanning trees');
-insert into Task (priority, schedule, completed, name) values (4, '2016-05-09', false, 'Revise applications of DFS and BFS');
-insert into Task (priority, schedule, completed, name) values (4, '2016-05-10', false, 'Revise main points from the first period');
-insert into Task (priority, schedule, completed, name) values (4, '2016-05-08', false, 'Take a day off');
-insert into Task (priority, schedule, completed, name) values (4, '2016-05-08', false, 'Go for a run, around 5-7 km');
-insert into Task (priority, schedule, completed, name) values (4, '2016-05-13', false, 'Kokkola City Run');
-insert into Task (priority, schedule, completed, name) values (3, '2016-04-07', false, 'Task work.1');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-07', false, 'Task work.2');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-08', false, 'Task work.3');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-04', false, 'Task school.1');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-04', false, 'Task school.2');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-05', false, 'Task school.3');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-05', false, 'Task personal.1');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-06', false, 'Task personal.2');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-06', false, 'Task personal.3');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-07', false, 'Task etc.1');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-07', false, 'Task etc.2');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-08', false, 'Task etc.3');
-insert into Task (priority, schedule, completed, name) values (3, '2016-04-07', false, 'Task work.1');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-07', false, 'Task work.2');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-08', false, 'Task work.3');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-04', false, 'Task school.1');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-04', false, 'Task school.2');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-05', false, 'Task school.3');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-05', false, 'Task personal.1');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-06', false, 'Task personal.2');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-06', false, 'Task personal.3');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-07', false, 'Task etc.1');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-07', false, 'Task etc.2');
-insert into Task (priority, schedule, completed, name) values (4, '2016-04-08', false, 'Task etc.3');
+with work_tasks as (
+    insert into Task (priority, schedule, completed, name) values
+        (4, CURRENT_DATE + interval '0 day', false, 'Work task 1'),
+        (4, CURRENT_DATE + interval '1 day', false, 'Work task 2'),
+        (4, CURRENT_DATE + interval '2 day', false, 'Work task 3')
+    returning *
+), work_proj as (
+    with example_user as (
+        select * from Person
+        where email = 'user@example.com'
+        limit 1
+    )
+    select * from Project
+    where name = 'Work' and person in (select id from example_user)
+    limit 1
+)
+insert into ProjectTask (task, project)
+select work_tasks.id, work_proj.id
+from work_proj
+full join work_tasks on true;
 
-insert into ProjectTask (task, project) values (1,  1);
-insert into ProjectTask (task, project) values (2,  1);
-insert into ProjectTask (task, project) values (3,  1);
-insert into ProjectTask (task, project) values (4,  1);
-insert into ProjectTask (task, project) values (5,  1);
-insert into ProjectTask (task, project) values (6,  1);
-insert into ProjectTask (task, project) values (7,  1);
-insert into ProjectTask (task, project) values (8,  1);
-insert into ProjectTask (task, project) values (9,  1);
-insert into ProjectTask (task, project) values (10, 1);
-insert into ProjectTask (task, project) values (11, 1);
-insert into ProjectTask (task, project) values (12, 1);
-insert into ProjectTask (task, project) values (13, 1);
-insert into ProjectTask (task, project) values (14, 2);
-insert into ProjectTask (task, project) values (15, 2);
-insert into ProjectTask (task, project) values (16, 2);
-insert into ProjectTask (task, project) values (17, 2);
-insert into ProjectTask (task, project) values (18, 2);
-insert into ProjectTask (task, project) values (19, 2);
-insert into ProjectTask (task, project) values (20, 2);
-insert into ProjectTask (task, project) values (21, 2);
-insert into ProjectTask (task, project) values (22, 2);
-insert into ProjectTask (task, project) values (23, 2);
-insert into ProjectTask (task, project) values (24, 2);
-insert into ProjectTask (task, project) values (25, 2);
-insert into ProjectTask (task, project) values (26, 2);
-insert into ProjectTask (task, project) values (27, 3);
-insert into ProjectTask (task, project) values (28, 3);
-insert into ProjectTask (task, project) values (29, 3);
-insert into ProjectTask (task, project) values (30, 4);
-insert into ProjectTask (task, project) values (31, 4);
-insert into ProjectTask (task, project) values (32, 4);
-insert into ProjectTask (task, project) values (33, 5);
-insert into ProjectTask (task, project) values (34, 5);
-insert into ProjectTask (task, project) values (35, 5);
-insert into ProjectTask (task, project) values (36, 6);
-insert into ProjectTask (task, project) values (37, 6);
-insert into ProjectTask (task, project) values (38, 6);
-insert into ProjectTask (task, project) values (39, 7);
-insert into ProjectTask (task, project) values (40, 7);
-insert into ProjectTask (task, project) values (41, 7);
-insert into ProjectTask (task, project) values (42, 8);
-insert into ProjectTask (task, project) values (43, 8);
-insert into ProjectTask (task, project) values (44, 8);
-insert into ProjectTask (task, project) values (45, 9);
-insert into ProjectTask (task, project) values (46, 9);
-insert into ProjectTask (task, project) values (47, 9);
-insert into ProjectTask (task, project) values (48, 10);
-insert into ProjectTask (task, project) values (49, 10);
-insert into ProjectTask (task, project) values (50, 10);
-insert into ProjectTask (task, project) values (51, 11);
-insert into ProjectTask (task, project) values (52, 11);
-insert into ProjectTask (task, project) values (53, 11);
+with school_tasks as (
+    insert into Task (priority, schedule, completed, name) values
+        (4, CURRENT_DATE + interval '0 day', false, 'School task 1'),
+        (4, CURRENT_DATE + interval '1 day', false, 'School task 2'),
+        (4, CURRENT_DATE + interval '2 day', false, 'School task 3')
+    returning *
+), school_proj as (
+    with example_user as (
+        select * from Person
+        where email = 'user@example.com'
+        limit 1
+    )
+    select * from Project
+    where name = 'School' and person in (select id from example_user)
+    limit 1
+)
+insert into ProjectTask (task, project)
+select school_tasks.id, school_proj.id
+from school_proj
+full join school_tasks on true;
+
+with personal_tasks as (
+    insert into Task (priority, schedule, completed, name) values
+        (4, CURRENT_DATE + interval '0 day', false, 'Personal task 1'),
+        (4, CURRENT_DATE + interval '1 day', false, 'Personal task 2'),
+        (4, CURRENT_DATE + interval '2 day', false, 'Personal task 3')
+    returning *
+), personal_proj as (
+    with example_user as (
+        select * from Person
+        where email = 'user@example.com'
+        limit 1
+    )
+    select * from Project
+    where name = 'Personal' and person in (select id from example_user)
+    limit 1
+)
+insert into ProjectTask (task, project)
+select personal_tasks.id, personal_proj.id
+from personal_proj
+full join personal_tasks on true;

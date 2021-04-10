@@ -1,30 +1,43 @@
-# Tehtävälista - Sovelluksen esittelysivu
+# tList
 
-Yleisiä linkkejä:
+tList is a simple online to-do list written mostly in Java.
 
-* [Sovelluksen kotisivu Herokun palvelimella](http://tlist.herokuapp.com) (**test&#64;user.com, pwd**)
-* [Työn dokumentaatio](doc/dokumentaatio.pdf)
+![A screenshot](doc/img/screenshot.png)
 
-Sovellus näyttää käyttäjän projektit, ja niihin kuuluvat tehtävät. Käyttäjä voi muokata vapaasti hänelle kuuluvia tehtäviä ja projekteja.
+## A running demo
 
-* Tehtäville on toteutettu **CRUD**-nelikko.
-* Projekteille on toteutettu **CRUD**-nelikko.
-* Tehtävien lisäys- ja muokkaus-lomake validoidaan. Tyhjä päivämäärä kuitenkin sallitaan tarkoituksella.
-* Projektien lisäys- ja muokkaus-lomake validoidaan.
-* Käyttäjä voi kirjautua sisään ja ulos. Sivuja ei näytetä ellei käyttäjä ole kirjautunut.
+If you just wish to see it in action, you can access the application at https://tlist.herokuapp.com. You may use the credentials ```user@example.com``` and ```pwd```.
 
-Aikaisempia virstanpylväitä:
+## Usage
 
-* [HTML-demosivu: seuraavan 7 päivän tehtävät -listausnäkymä](http://tlist.herokuapp.com/html-demo/index.html)
-* [SQL-taulujen luonti](sql/)
-* [ConnectionTest](http://tlist.herokuapp.com/connectiontest/index.html) ja [ListData](http://tlist.herokuapp.com/listData)
+If you have [Docker](https://docker.com) installed, you can spin up a local development environment with just a few lines. First, build the services (```db``` and ```app```) with the command
 
-Työn aihe on **tehtävälista**, joka on muokattu versio valmiista aiheesta **[muistilista](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Muistilista.html)**. Kyseessä on siis verkossa toimiva to do -lista, johon voi kirjata lähipäivien ja -viikkojen tehtävät. Olennaisin ero valmiiseen aiheeseen verrattuna on, että tämä sovellus jaottelee tehtävät ensisijaisesti päivämäärän mukaan. Täten sovellus toimii samalla tavalla kuin esimerkiksi [Todoist](http://todoist.com)-verkkopalvelu.
+```shell
+docker-compose build
+```
 
-## Kurssisivut
+If you are not familiar with Docker, this builds a Docker image for each service. Docker images are similar to virtual machine images, but they are more lightweight.
 
-Aineopintojen harjoitustyö: Tietokantasovellus
+Second, start up the services with the command
 
-* https://www.cs.helsinki.fi/courses/582203/2016/k/a/2
-* http://tsoha.github.io/
-* http://advancedkittenry.github.io/
+```shell
+docker-compose up
+```
+
+This provisions a database server and starts an embedded Tomcat server running the application.
+
+When the database server starts for the first time, it creates a database for the application and creates the necessary tables. It also adds one user to the database: ```user@example.com``` with the password ```pwd```. If you wish, you may remove this user by accessing the database manually.
+
+If you wish to access the database, you can open a psql shell with the command
+
+```shell
+docker-compose run --rm db psql -h db -U postgres
+```
+
+The default password is ```secret```. Please recognize that this a local setup, which should never be exposed to the internet. The application expects the data to be in the default database named ```postgres```. You may wish to look at the directory [sql/](sql/) for some examples.
+
+And that's it! The service should be available at http://localhost:8080.
+
+## License
+
+[MIT](LICENSE)

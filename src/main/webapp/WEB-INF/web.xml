@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>listData</servlet-name>
-        <servlet-class>tlist.servlets.ListData</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>project</servlet-name>
         <servlet-class>tlist.servlets.ViewProject</servlet-class>
     </servlet>
@@ -56,10 +52,6 @@
         <servlet-name>next7</servlet-name>
         <servlet-class>tlist.servlets.ViewNext7Days</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>listData</servlet-name>
-        <url-pattern>/listData</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>today</servlet-name>
         <url-pattern/>
